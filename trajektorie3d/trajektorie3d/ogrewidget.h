@@ -63,6 +63,8 @@ protected:
     */
     virtual Ogre::RenderSystem* chooseRenderer(const Ogre::RenderSystemList*);
 
+	void setCubeParams(Ogre::ManualObject* cube);
+
     void setupResources(void);
     void ogreInitialization();
 

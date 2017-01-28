@@ -14,8 +14,8 @@ public:
     trajektorie3d(QWidget *parent = 0);
     ~trajektorie3d();
 
-//private:
-    Ui::trajektorie3dClass ui;
+private:
+    Ui::trajektorie3dClass* ui;
 };
 
 #endif // TRAJEKTORIE3D_H
