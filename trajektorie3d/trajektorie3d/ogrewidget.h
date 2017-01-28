@@ -27,27 +27,9 @@ class OgreWidget : public QGLWidget
     //Q_OBJECT;
 
 public:
-    OgreWidget(QWidget *parent = 0) :
-        QGLWidget(parent),
-        mOgreWindow(NULL)
-    {
-        #ifdef _DEBUG
-            mResourcesCfg = "resources_d.cfg";
-            mPluginsCfg = "plugins_d.cfg";
-        #else
-            mResourcesCfg = "resources.cfg";
-            mPluginsCfg = "plugins.cfg";
-        #endif
+	OgreWidget(QWidget *parent = 0);
 
-       init(mPluginsCfg, "./ogre.cfg", "./ogre.log");
-    }
-
-    virtual ~OgreWidget()
-    {
-        mOgreRoot->shutdown();
-        delete mOgreRoot;
-        destroy();
-    }
+	virtual ~OgreWidget();
 
 protected:
 

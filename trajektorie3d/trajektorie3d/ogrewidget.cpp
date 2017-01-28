@@ -1,8 +1,30 @@
 #include "ogrewidget.h"
 
-#define THIS OgreWidget
+#include <QDebug>
 
-void THIS::init(std::string plugins_file,
+OgreWidget::OgreWidget(QWidget *parent) :
+QGLWidget(parent),
+mOgreWindow(NULL)
+{
+	#ifdef _DEBUG
+		mResourcesCfg = "resources_d.cfg";
+		mPluginsCfg = "plugins_d.cfg";
+	#else
+		mResourcesCfg = "resources.cfg";
+		mPluginsCfg = "plugins.cfg";
+	#endif
+
+	init(mPluginsCfg, "./ogre.cfg", "./ogre.log");
+}
+
+OgreWidget::~OgreWidget()
+{
+	mOgreRoot->shutdown();
+	delete mOgreRoot;
+	destroy();
+}
+
+void OgreWidget::init(std::string plugins_file,
     std::string ogre_cfg_file,
     std::string ogre_log)
 {
@@ -16,25 +38,24 @@ void THIS::init(std::string plugins_file,
     const Ogre::RenderSystemList *renderers = &(mOgreRoot->getAvailableRenderers());
     assert(!renderers->empty()); // we need at least one renderer to do anything useful
 
-    Ogre::RenderSystem *renderSystem;
-    renderSystem = chooseRenderer(renderers);
+	for (int i = 0; i < renderers->size(); i++)
+		qDebug() << "Available renderer" << QString::fromStdString(renderers->at(i)->getName());
+	Ogre::RenderSystem* renderSystem = chooseRenderer(renderers);
+	qDebug() << "Choosed" << QString::fromStdString(renderSystem->getName());
 
     assert(renderSystem); // user might pass back a null renderer, which would be bad!
-
     mOgreRoot->setRenderSystem(renderSystem);
-    QString dimensions = QString("%1x%2")
-        .arg(this->width())
-        .arg(this->height());
 
+    QString dimensions = QString("%1x%2").arg(this->width()).arg(this->height());
     renderSystem->setConfigOption("Video Mode", dimensions.toStdString());
 
     // initialize without creating window
-    mOgreRoot->getRenderSystem()->setConfigOption("Full Screen", "No");
+	renderSystem->setConfigOption("Full Screen", "No");
     mOgreRoot->saveConfig();
     mOgreRoot->initialise(false); // don't create a window
 }
 
-void THIS::initializeGL()
+void OgreWidget::initializeGL()
 {
     //== Creating and Acquiring Ogre Window ==//
     // Get the parameters of the window QT created
@@ -78,15 +99,15 @@ void THIS::initializeGL()
     headNode->attachObject(ogreHead);
 }
 
-void THIS::paintGL()
+void OgreWidget::paintGL()
 {
     // Be sure to call "OgreWidget->repaint();" to call paintGL
     swapBuffers();
     assert(mOgreWindow);
-    mOgreRoot->renderOneFrame();
+    //mOgreRoot->renderOneFrame();
 }
 
-void THIS::resizeGL(int width, int height)
+void OgreWidget::resizeGL(int width, int height)
 {
     assert(mOgreWindow);
     mOgreWindow->reposition(this->pos().x(),
@@ -95,14 +116,14 @@ void THIS::resizeGL(int width, int height)
     paintGL();
 }
 
-Ogre::RenderSystem* THIS::chooseRenderer(const Ogre::RenderSystemList *renderers)
+Ogre::RenderSystem* OgreWidget::chooseRenderer(const Ogre::RenderSystemList *renderers)
 {
     // It would probably be wise to do something more friendly 
     // that just use the first available renderer
-    return *renderers->begin();
+	return renderers->at(0);
 }
 
-void THIS::setupResources(void)
+void OgreWidget::setupResources(void)
 {
     // Load resource paths from config file
     Ogre::ConfigFile cf;
@@ -128,7 +149,7 @@ void THIS::setupResources(void)
     }
 }
 
-void THIS::ogreInitialization()
+void OgreWidget::ogreInitialization()
 {
     // choose scenemanager
     Ogre::SceneType scene_manager_type = Ogre::ST_GENERIC;
@@ -138,7 +159,7 @@ void THIS::ogreInitialization()
     // create camera
     mCamera = mSceneMgr->createCamera("QOgreWidget_Cam");
     // Position it at 500 in Z direction
-    mCamera->setPosition(Ogre::Vector3(0, 0, 150));
+    mCamera->setPosition(Ogre::Vector3(0, 0, 40));
     // Look back along -Z
     mCamera->lookAt(Ogre::Vector3(0, 0, -300));
     mCamera->setNearClipDistance(5);
@@ -147,7 +168,7 @@ void THIS::ogreInitialization()
 
     // create viewports
     mViewport = mOgreWindow->addViewport(mCamera);
-    mViewport->setBackgroundColour(Ogre::ColourValue(0.5, 0.4, 0.4));
+    mViewport->setBackgroundColour(Ogre::ColourValue(0.74, 0.82, 0.9));
     // Alter the camera aspect ratio to match the viewport
     mCamera->setAspectRatio(
         Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight()));
@@ -162,7 +183,7 @@ void THIS::ogreInitialization()
     // load resources
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
-    // Create a light
+    //// Create a light
     Ogre::Light* l = mSceneMgr->createLight("MainLight");
     l->setPosition(20, 80, 50);
 }
