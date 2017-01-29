@@ -20,16 +20,21 @@
 #include <SdkCameraMan.h>
 
 #include <QtOpenGL/QGLWidget>
-//#include <QX11Info>
+
+#include "utils.h"
 
 class OgreWidget : public QGLWidget
 {
-    //Q_OBJECT;
+    Q_OBJECT;
 
 public:
 	OgreWidget(QWidget *parent = 0);
 
 	virtual ~OgreWidget();
+
+	void redrawScene();
+
+    void turnCamera(Direction direction);
 
 protected:
 
@@ -79,6 +84,8 @@ protected:
 
     Ogre::String mResourcesCfg;
     Ogre::String mPluginsCfg;
+
+    float cameraDistance = 30;
 };
 
 #endif

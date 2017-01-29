@@ -16,6 +16,9 @@ public:
 
 private:
     Ui::trajektorie3dClass* ui;
+
+	OgreWidget* ogreWidget;
+	void chooseMapClicked();
 };
 
 #endif // TRAJEKTORIE3D_H
