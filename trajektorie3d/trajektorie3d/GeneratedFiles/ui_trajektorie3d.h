@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'trajektorie3d.ui'
 **
-** Created by: Qt User Interface Compiler version 5.7.0
+** Created by: Qt User Interface Compiler version 5.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -23,6 +23,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
@@ -40,7 +41,6 @@ public:
     QAction *actionO_programie;
     QWidget *centralWidget;
     QGridLayout *centralLayout;
-    QWidget *dummyWidget;
     QFrame *frame;
     QVBoxLayout *verticalLayout;
     QGroupBox *mapEditBox;
@@ -56,7 +56,23 @@ public:
     QPushButton *pushButton_3;
     QPushButton *pushButton_4;
     QGroupBox *algorithmBox;
+    QGroupBox *groupBox_Metric;
+    QRadioButton *radioButton_Manhattan;
+    QRadioButton *radioButton_Czebyszew;
+    QLabel *label_3;
+    QLabel *label_4;
+    QSpinBox *spinBox_przeszkoda;
+    QComboBox *comboBox_algorithm;
     QGroupBox *computingBox;
+    QLabel *label_6;
+    QLabel *label_7;
+    QLabel *label_lengthEuclides;
+    QLabel *label_lengthWay;
+    QLabel *label_numOperations;
+    QLabel *label_5;
+    QPushButton *button_start;
+    QRadioButton *radioButton_Wisualisation;
+    QWidget *dummyWidget;
     QMenuBar *menuBar;
     QMenu *menuPlik;
     QMenu *menuPomoc;
@@ -84,13 +100,6 @@ public:
         centralLayout->setSpacing(6);
         centralLayout->setContentsMargins(11, 11, 11, 11);
         centralLayout->setObjectName(QStringLiteral("centralLayout"));
-        dummyWidget = new QWidget(centralWidget);
-        dummyWidget->setObjectName(QStringLiteral("dummyWidget"));
-        dummyWidget->setMinimumSize(QSize(640, 480));
-        dummyWidget->setMaximumSize(QSize(640, 480));
-
-        centralLayout->addWidget(dummyWidget, 0, 0, 1, 1);
-
         frame = new QFrame(centralWidget);
         frame->setObjectName(QStringLiteral("frame"));
         frame->setFrameShape(QFrame::StyledPanel);
@@ -176,17 +185,69 @@ public:
         algorithmBox = new QGroupBox(frame);
         algorithmBox->setObjectName(QStringLiteral("algorithmBox"));
         algorithmBox->setMinimumSize(QSize(0, 100));
+        groupBox_Metric = new QGroupBox(algorithmBox);
+        groupBox_Metric->setObjectName(QStringLiteral("groupBox_Metric"));
+        groupBox_Metric->setGeometry(QRect(10, 40, 171, 61));
+        radioButton_Manhattan = new QRadioButton(groupBox_Metric);
+        radioButton_Manhattan->setObjectName(QStringLiteral("radioButton_Manhattan"));
+        radioButton_Manhattan->setGeometry(QRect(10, 20, 82, 17));
+        radioButton_Czebyszew = new QRadioButton(groupBox_Metric);
+        radioButton_Czebyszew->setObjectName(QStringLiteral("radioButton_Czebyszew"));
+        radioButton_Czebyszew->setGeometry(QRect(10, 40, 82, 17));
+        label_3 = new QLabel(algorithmBox);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setGeometry(QRect(20, 20, 47, 13));
+        label_4 = new QLabel(algorithmBox);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setGeometry(QRect(20, 110, 121, 16));
+        spinBox_przeszkoda = new QSpinBox(algorithmBox);
+        spinBox_przeszkoda->setObjectName(QStringLiteral("spinBox_przeszkoda"));
+        spinBox_przeszkoda->setGeometry(QRect(140, 110, 42, 22));
+        comboBox_algorithm = new QComboBox(algorithmBox);
+        comboBox_algorithm->setObjectName(QStringLiteral("comboBox_algorithm"));
+        comboBox_algorithm->setGeometry(QRect(70, 20, 111, 22));
 
         verticalLayout->addWidget(algorithmBox);
 
         computingBox = new QGroupBox(frame);
         computingBox->setObjectName(QStringLiteral("computingBox"));
         computingBox->setMinimumSize(QSize(0, 100));
+        label_6 = new QLabel(computingBox);
+        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setGeometry(QRect(20, 70, 81, 16));
+        label_7 = new QLabel(computingBox);
+        label_7->setObjectName(QStringLiteral("label_7"));
+        label_7->setGeometry(QRect(20, 90, 81, 16));
+        label_lengthEuclides = new QLabel(computingBox);
+        label_lengthEuclides->setObjectName(QStringLiteral("label_lengthEuclides"));
+        label_lengthEuclides->setGeometry(QRect(110, 50, 51, 16));
+        label_lengthWay = new QLabel(computingBox);
+        label_lengthWay->setObjectName(QStringLiteral("label_lengthWay"));
+        label_lengthWay->setGeometry(QRect(110, 70, 51, 16));
+        label_numOperations = new QLabel(computingBox);
+        label_numOperations->setObjectName(QStringLiteral("label_numOperations"));
+        label_numOperations->setGeometry(QRect(110, 90, 51, 16));
+        label_5 = new QLabel(computingBox);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setGeometry(QRect(20, 50, 81, 16));
+        button_start = new QPushButton(computingBox);
+        button_start->setObjectName(QStringLiteral("button_start"));
+        button_start->setGeometry(QRect(20, 20, 81, 23));
+        radioButton_Wisualisation = new QRadioButton(computingBox);
+        radioButton_Wisualisation->setObjectName(QStringLiteral("radioButton_Wisualisation"));
+        radioButton_Wisualisation->setGeometry(QRect(110, 20, 81, 21));
 
         verticalLayout->addWidget(computingBox);
 
 
         centralLayout->addWidget(frame, 0, 2, 1, 1);
+
+        dummyWidget = new QWidget(centralWidget);
+        dummyWidget->setObjectName(QStringLiteral("dummyWidget"));
+        dummyWidget->setMinimumSize(QSize(640, 480));
+        dummyWidget->setMaximumSize(QSize(640, 480));
+
+        centralLayout->addWidget(dummyWidget, 0, 0, 1, 1);
 
         trajektorie3dClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(trajektorie3dClass);
@@ -217,25 +278,39 @@ public:
 
     void retranslateUi(QMainWindow *trajektorie3dClass)
     {
-        trajektorie3dClass->setWindowTitle(QApplication::translate("trajektorie3dClass", "trajektorie3d", 0));
-        actionZamknij->setText(QApplication::translate("trajektorie3dClass", "Zamknij", 0));
-        actionOtw_rz_map->setText(QApplication::translate("trajektorie3dClass", "Otw\303\263rz map\304\231", 0));
-        actionZapisz_map->setText(QApplication::translate("trajektorie3dClass", "Zapisz map\304\231", 0));
-        actionNowa_mapa->setText(QApplication::translate("trajektorie3dClass", "Nowa mapa", 0));
-        actionO_programie->setText(QApplication::translate("trajektorie3dClass", "O programie", 0));
-        mapEditBox->setTitle(QApplication::translate("trajektorie3dClass", "Edycja mapy", 0));
-        label_2->setText(QApplication::translate("trajektorie3dClass", "Obiekt do dodania:", 0));
-        pushButton->setText(QApplication::translate("trajektorie3dClass", "Dodawaj", 0));
-        pushButton_2->setText(QApplication::translate("trajektorie3dClass", "Usuwaj", 0));
-        d2Button->setText(QApplication::translate("trajektorie3dClass", "Widok 2D", 0));
-        d3Button->setText(QApplication::translate("trajektorie3dClass", "Widok 3D", 0));
-        label->setText(QApplication::translate("trajektorie3dClass", "Wybierz poziom:", 0));
-        pushButton_3->setText(QApplication::translate("trajektorie3dClass", "Umie\305\233\304\207 CEL", 0));
-        pushButton_4->setText(QApplication::translate("trajektorie3dClass", "Umie\305\233\304\207 START", 0));
-        algorithmBox->setTitle(QApplication::translate("trajektorie3dClass", "Ustawienia algorytmu", 0));
-        computingBox->setTitle(QApplication::translate("trajektorie3dClass", "Liczenie trajektorii", 0));
-        menuPlik->setTitle(QApplication::translate("trajektorie3dClass", "Plik", 0));
-        menuPomoc->setTitle(QApplication::translate("trajektorie3dClass", "Pomoc", 0));
+        trajektorie3dClass->setWindowTitle(QApplication::translate("trajektorie3dClass", "trajektorie3d", Q_NULLPTR));
+        actionZamknij->setText(QApplication::translate("trajektorie3dClass", "Zamknij", Q_NULLPTR));
+        actionOtw_rz_map->setText(QApplication::translate("trajektorie3dClass", "Otw\303\263rz map\304\231", Q_NULLPTR));
+        actionZapisz_map->setText(QApplication::translate("trajektorie3dClass", "Zapisz map\304\231", Q_NULLPTR));
+        actionNowa_mapa->setText(QApplication::translate("trajektorie3dClass", "Nowa mapa", Q_NULLPTR));
+        actionO_programie->setText(QApplication::translate("trajektorie3dClass", "O programie", Q_NULLPTR));
+        mapEditBox->setTitle(QApplication::translate("trajektorie3dClass", "Edycja mapy", Q_NULLPTR));
+        label_2->setText(QApplication::translate("trajektorie3dClass", "Obiekt do dodania:", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("trajektorie3dClass", "Dodawaj", Q_NULLPTR));
+        pushButton_2->setText(QApplication::translate("trajektorie3dClass", "Usuwaj", Q_NULLPTR));
+        d2Button->setText(QApplication::translate("trajektorie3dClass", "Widok 2D", Q_NULLPTR));
+        d3Button->setText(QApplication::translate("trajektorie3dClass", "Widok 3D", Q_NULLPTR));
+        label->setText(QApplication::translate("trajektorie3dClass", "Wybierz poziom:", Q_NULLPTR));
+        pushButton_3->setText(QApplication::translate("trajektorie3dClass", "Umie\305\233\304\207 CEL", Q_NULLPTR));
+        pushButton_4->setText(QApplication::translate("trajektorie3dClass", "Umie\305\233\304\207 START", Q_NULLPTR));
+        algorithmBox->setTitle(QApplication::translate("trajektorie3dClass", "Ustawienia algorytmu", Q_NULLPTR));
+        groupBox_Metric->setTitle(QApplication::translate("trajektorie3dClass", "Metryka", Q_NULLPTR));
+        radioButton_Manhattan->setText(QApplication::translate("trajektorie3dClass", "Manhattan", Q_NULLPTR));
+        radioButton_Czebyszew->setText(QApplication::translate("trajektorie3dClass", "Czebyszew", Q_NULLPTR));
+        label_3->setText(QApplication::translate("trajektorie3dClass", "Algorytm", Q_NULLPTR));
+        label_4->setText(QApplication::translate("trajektorie3dClass", "Poszerz przeszkody o: ", Q_NULLPTR));
+        comboBox_algorithm->setCurrentText(QString());
+        computingBox->setTitle(QApplication::translate("trajektorie3dClass", "Liczenie trajektorii", Q_NULLPTR));
+        label_6->setText(QApplication::translate("trajektorie3dClass", "D\305\202. drogi:", Q_NULLPTR));
+        label_7->setText(QApplication::translate("trajektorie3dClass", "Ilo\305\233\304\207 operacji:", Q_NULLPTR));
+        label_lengthEuclides->setText(QApplication::translate("trajektorie3dClass", "0", Q_NULLPTR));
+        label_lengthWay->setText(QApplication::translate("trajektorie3dClass", "0", Q_NULLPTR));
+        label_numOperations->setText(QApplication::translate("trajektorie3dClass", "0", Q_NULLPTR));
+        label_5->setText(QApplication::translate("trajektorie3dClass", "D\305\202. Euklidesowa:", Q_NULLPTR));
+        button_start->setText(QApplication::translate("trajektorie3dClass", "START", Q_NULLPTR));
+        radioButton_Wisualisation->setText(QApplication::translate("trajektorie3dClass", "Wizualizacja", Q_NULLPTR));
+        menuPlik->setTitle(QApplication::translate("trajektorie3dClass", "Plik", Q_NULLPTR));
+        menuPomoc->setTitle(QApplication::translate("trajektorie3dClass", "Pomoc", Q_NULLPTR));
     } // retranslateUi
 
 };

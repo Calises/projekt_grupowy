@@ -15,7 +15,11 @@ public:
     ~trajektorie3d();
 
 //private:
-    Ui::trajektorie3dClass ui;
+	Ui::trajektorie3dClass ui; 
+
+public slots:
+	void startAlgorithm();
+
 };
 
 #endif // TRAJEKTORIE3D_H

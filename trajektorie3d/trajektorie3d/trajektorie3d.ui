@@ -18,22 +18,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="centralLayout">
-    <item row="0" column="0">
-     <widget class="QWidget" name="dummyWidget" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>640</width>
-        <height>480</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>640</width>
-        <height>480</height>
-       </size>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="2">
      <widget class="QFrame" name="frame">
       <property name="frameShape">
@@ -166,6 +150,94 @@
          <property name="title">
           <string>Ustawienia algorytmu</string>
          </property>
+         <widget class="QGroupBox" name="groupBox_Metric">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>40</y>
+            <width>171</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <property name="title">
+           <string>Metryka</string>
+          </property>
+          <widget class="QRadioButton" name="radioButton_Manhattan">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>20</y>
+             <width>82</width>
+             <height>17</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Manhattan</string>
+           </property>
+          </widget>
+          <widget class="QRadioButton" name="radioButton_Czebyszew">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>40</y>
+             <width>82</width>
+             <height>17</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Czebyszew</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QLabel" name="label_3">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>20</y>
+            <width>47</width>
+            <height>13</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Algorytm</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_4">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>110</y>
+            <width>121</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Poszerz przeszkody o: </string>
+          </property>
+         </widget>
+         <widget class="QSpinBox" name="spinBox_przeszkoda">
+          <property name="geometry">
+           <rect>
+            <x>140</x>
+            <y>110</y>
+            <width>42</width>
+            <height>22</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="comboBox_algorithm">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>20</y>
+            <width>111</width>
+            <height>22</height>
+           </rect>
+          </property>
+          <property name="currentText">
+           <string/>
+          </property>
+         </widget>
         </widget>
        </item>
        <item>
@@ -179,9 +251,129 @@
          <property name="title">
           <string>Liczenie trajektorii</string>
          </property>
+         <widget class="QLabel" name="label_6">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>70</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Dł. drogi:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_7">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>90</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Ilość operacji:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_lengthEuclides">
+          <property name="geometry">
+           <rect>
+            <x>110</x>
+            <y>50</y>
+            <width>51</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_lengthWay">
+          <property name="geometry">
+           <rect>
+            <x>110</x>
+            <y>70</y>
+            <width>51</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_numOperations">
+          <property name="geometry">
+           <rect>
+            <x>110</x>
+            <y>90</y>
+            <width>51</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_5">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>50</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Dł. Euklidesowa:</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="button_start">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>20</y>
+            <width>81</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>START</string>
+          </property>
+         </widget>
+         <widget class="QRadioButton" name="radioButton_Wisualisation">
+          <property name="geometry">
+           <rect>
+            <x>110</x>
+            <y>20</y>
+            <width>81</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Wizualizacja</string>
+          </property>
+         </widget>
         </widget>
        </item>
       </layout>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QWidget" name="dummyWidget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>640</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>640</width>
+        <height>480</height>
+       </size>
+      </property>
      </widget>
     </item>
    </layout>
