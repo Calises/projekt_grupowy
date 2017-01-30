@@ -1,4 +1,5 @@
 #include "trajektorie3d.h"
+#include "utils.h"
 
 trajektorie3d::trajektorie3d(QWidget *parent) :
 	QMainWindow(parent),
@@ -6,7 +7,19 @@ trajektorie3d::trajektorie3d(QWidget *parent) :
 {
     ui->setupUi(this);
 
-	OgreWidget* ogreWidget = new OgreWidget(this);
+	connect(ui->chooseMapButton, &QPushButton::clicked,
+			this, &trajektorie3d::chooseMapClicked);
+
+    connect(ui->turnLeftButton, &QPushButton::clicked,
+        [=](){ ogreWidget->turnCamera(Direction::Left); });
+    connect(ui->turnRightButton, &QPushButton::clicked,
+        [=](){ ogreWidget->turnCamera(Direction::Right); });
+    connect(ui->turnUpButton, &QPushButton::clicked,
+        [=](){ ogreWidget->turnCamera(Direction::Up); });
+    connect(ui->turnDownButton, &QPushButton::clicked,
+        [=](){ ogreWidget->turnCamera(Direction::Down); });
+
+	ogreWidget = new OgreWidget(this);
 	ogreWidget->setFixedWidth(640);
 	ogreWidget->setFixedHeight(480);
 
@@ -15,5 +28,9 @@ trajektorie3d::trajektorie3d(QWidget *parent) :
 
 trajektorie3d::~trajektorie3d()
 {
+}
 
+void trajektorie3d::chooseMapClicked()
+{
+	ogreWidget->redrawScene();
 }

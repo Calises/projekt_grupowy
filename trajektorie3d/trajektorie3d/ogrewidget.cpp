@@ -1,6 +1,7 @@
 #include "ogrewidget.h"
 
 #include <QDebug>
+#include <QQuaternion>
 
 OgreWidget::OgreWidget(QWidget *parent) :
 QGLWidget(parent),
@@ -94,71 +95,73 @@ void OgreWidget::initializeGL()
     ogreInitialization();
 
 
-
-
 	// Create the scene
 
-	////OBSTACLE MESH
-	Ogre::ManualObject* cube = mSceneMgr->createManualObject("Cube");
-	cube->begin("blockade", Ogre::RenderOperation::OT_TRIANGLE_LIST);	//czemu blockade nie dzia³a?
-	setCubeParams(cube);
-	cube->convertToMesh("Cube");
+    //// Create a light
+	Ogre::Light* l = mSceneMgr->createLight("MainLight");
+	l->setPosition(20, 80, 50);
 
-	////START MESH
-	Ogre::ManualObject* start = mSceneMgr->createManualObject("Start");
-	start->begin("red", Ogre::RenderOperation::OT_TRIANGLE_LIST);
-	setCubeParams(start);
-	start->convertToMesh("Start");
-
-	////STOP MESH
-	Ogre::ManualObject* stop = mSceneMgr->createManualObject("Stop");
-	stop->begin("green", Ogre::RenderOperation::OT_TRIANGLE_LIST);
-	setCubeParams(stop);
-	stop->convertToMesh("Stop");
-
-
-	Ogre::Entity* startEnt = mSceneMgr->createEntity("Start");
+    Ogre::Entity* startEnt = mSceneMgr->createEntity("Start", "startCube.mesh");
 	Ogre::SceneNode* startNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("StartNode");
 	startNode->setPosition(-5, -5, 0);
 	startNode->attachObject(startEnt);
 
-	Ogre::Entity* stopEnt = mSceneMgr->createEntity("Stop");
+    Ogre::Entity* stopEnt = mSceneMgr->createEntity("Stop", "stopCube.mesh");
 	Ogre::SceneNode* stopNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("StopNode");
 	stopNode->setPosition(10, 5, 0);
 	stopNode->attachObject(stopEnt);
 
-	Ogre::Entity* ent1 = mSceneMgr->createEntity("Cube");
+    Ogre::Entity* ent1 = mSceneMgr->createEntity("blockCube.mesh");
 	Ogre::SceneNode* node1 = mSceneMgr->getRootSceneNode()->createChildSceneNode("Node1");
 	node1->setPosition(0, 0, 0);
 	node1->attachObject(ent1);
 
-	Ogre::Entity* ent2 = mSceneMgr->createEntity("Cube");
+    Ogre::Entity* ent2 = mSceneMgr->createEntity("blockCube.mesh");
 	Ogre::SceneNode* node2 = mSceneMgr->getRootSceneNode()->createChildSceneNode("Node2");
-	node2->setPosition(5, 5, 0);
+	node2->setPosition(2, 5, 0);
 	node2->attachObject(ent2);
 }
 
-void OgreWidget::setCubeParams(Ogre::ManualObject* cube)
+void OgreWidget::redrawScene()
 {
-	cube->position(0.5, -0.5, 0.0);
-	cube->textureCoord(0, 1);	//ogarnac te texture coords
-	cube->position(-0.5, 0.5, 0.0);
-	cube->textureCoord(1, 0);
-	cube->position(-0.5, -0.5, 0.0);
-	cube->textureCoord(1, 1);
-	cube->position(0.5, 0.5, 0.0);
-	cube->textureCoord(0, 0);
+	mSceneMgr->clearScene();
+    repaint();
 
-	//wtf?
-	cube->index(0);
-	cube->index(1);
-	cube->index(2);
+    //Tutaj rysowanie mapy
+}
 
-	cube->index(0);
-	cube->index(3);
-	cube->index(1);
+void OgreWidget::turnCamera(Direction direction)
+{
+    //Sprobowac wykorzystac mCameraMan->setStyle(CS_ORBIT)
+    //http://www.ogre3d.org/tikiwiki/SdkCameraMan
 
-	cube->end();
+    Ogre::Vector3 oldPosition = mCamera->getPosition();
+
+    QQuaternion rotation;
+    switch (direction)
+    {
+    case Left:
+        rotation = QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, -10);
+        break;
+    case Right:
+        rotation = QQuaternion::fromAxisAndAngle(0.0f, 1.0f, 0.0f, 10);
+        break;
+    case Up:
+        rotation = QQuaternion::fromAxisAndAngle(-oldPosition.z, 0.0f, oldPosition.x, 10);
+        break;
+    case Down:
+        rotation = QQuaternion::fromAxisAndAngle(-oldPosition.z, 0.0f, oldPosition.x, -10);
+        break;
+    default:
+        return;
+    }
+
+    QVector3D newQVector = rotation.rotatedVector(QVector3D(oldPosition.x, oldPosition.y, oldPosition.z));
+        Ogre::Vector3 newPosition(newQVector.x(), newQVector.y(), newQVector.z());
+    qDebug() << "new camera position:" << newPosition.x << newPosition.y << newPosition.z;
+    mCamera->setPosition(newPosition);
+    mCamera->lookAt(-newPosition);
+    repaint();
 }
 
 void OgreWidget::paintGL()
@@ -221,9 +224,9 @@ void OgreWidget::ogreInitialization()
     // create camera
     mCamera = mSceneMgr->createCamera("QOgreWidget_Cam");
     // Position it at 500 in Z direction
-    mCamera->setPosition(Ogre::Vector3(0, 0, 40));
+    mCamera->setPosition(Ogre::Vector3(0, 0, cameraDistance));
     // Look back along -Z
-    mCamera->lookAt(Ogre::Vector3(0, 0, -300));
+    mCamera->lookAt(Ogre::Vector3(-0, -0, -cameraDistance));
     mCamera->setNearClipDistance(5);
     // create a default camera controller
     mCameraMan = new OgreBites::SdkCameraMan(mCamera);
@@ -244,8 +247,4 @@ void OgreWidget::ogreInitialization()
 
     // load resources
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-    //// Create a light
-    Ogre::Light* l = mSceneMgr->createLight("MainLight");
-    l->setPosition(20, 80, 50);
 }
