@@ -93,10 +93,72 @@ void OgreWidget::initializeGL()
 
     ogreInitialization();
 
-    // Create the scene
-    Ogre::Entity* ogreHead = mSceneMgr->createEntity("Head", "ogrehead.mesh");
-    Ogre::SceneNode* headNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-    headNode->attachObject(ogreHead);
+
+
+
+	// Create the scene
+
+	////OBSTACLE MESH
+	Ogre::ManualObject* cube = mSceneMgr->createManualObject("Cube");
+	cube->begin("blockade", Ogre::RenderOperation::OT_TRIANGLE_LIST);	//czemu blockade nie dzia³a?
+	setCubeParams(cube);
+	cube->convertToMesh("Cube");
+
+	////START MESH
+	Ogre::ManualObject* start = mSceneMgr->createManualObject("Start");
+	start->begin("red", Ogre::RenderOperation::OT_TRIANGLE_LIST);
+	setCubeParams(start);
+	start->convertToMesh("Start");
+
+	////STOP MESH
+	Ogre::ManualObject* stop = mSceneMgr->createManualObject("Stop");
+	stop->begin("green", Ogre::RenderOperation::OT_TRIANGLE_LIST);
+	setCubeParams(stop);
+	stop->convertToMesh("Stop");
+
+
+	Ogre::Entity* startEnt = mSceneMgr->createEntity("Start");
+	Ogre::SceneNode* startNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("StartNode");
+	startNode->setPosition(-5, -5, 0);
+	startNode->attachObject(startEnt);
+
+	Ogre::Entity* stopEnt = mSceneMgr->createEntity("Stop");
+	Ogre::SceneNode* stopNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("StopNode");
+	stopNode->setPosition(10, 5, 0);
+	stopNode->attachObject(stopEnt);
+
+	Ogre::Entity* ent1 = mSceneMgr->createEntity("Cube");
+	Ogre::SceneNode* node1 = mSceneMgr->getRootSceneNode()->createChildSceneNode("Node1");
+	node1->setPosition(0, 0, 0);
+	node1->attachObject(ent1);
+
+	Ogre::Entity* ent2 = mSceneMgr->createEntity("Cube");
+	Ogre::SceneNode* node2 = mSceneMgr->getRootSceneNode()->createChildSceneNode("Node2");
+	node2->setPosition(5, 5, 0);
+	node2->attachObject(ent2);
+}
+
+void OgreWidget::setCubeParams(Ogre::ManualObject* cube)
+{
+	cube->position(0.5, -0.5, 0.0);
+	cube->textureCoord(0, 1);	//ogarnac te texture coords
+	cube->position(-0.5, 0.5, 0.0);
+	cube->textureCoord(1, 0);
+	cube->position(-0.5, -0.5, 0.0);
+	cube->textureCoord(1, 1);
+	cube->position(0.5, 0.5, 0.0);
+	cube->textureCoord(0, 0);
+
+	//wtf?
+	cube->index(0);
+	cube->index(1);
+	cube->index(2);
+
+	cube->index(0);
+	cube->index(3);
+	cube->index(1);
+
+	cube->end();
 }
 
 void OgreWidget::paintGL()
@@ -104,7 +166,7 @@ void OgreWidget::paintGL()
     // Be sure to call "OgreWidget->repaint();" to call paintGL
     swapBuffers();
     assert(mOgreWindow);
-    //mOgreRoot->renderOneFrame();
+    mOgreRoot->renderOneFrame();
 }
 
 void OgreWidget::resizeGL(int width, int height)
