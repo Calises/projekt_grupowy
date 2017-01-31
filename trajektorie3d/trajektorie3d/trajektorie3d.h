@@ -14,6 +14,9 @@ public:
     trajektorie3d(QWidget *parent = 0);
     ~trajektorie3d();
 
+public slots:
+    void startAlgorithm();
+
 private:
     Ui::trajektorie3dClass* ui;
 
