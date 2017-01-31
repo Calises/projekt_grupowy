@@ -9,7 +9,6 @@ trajektorie3d::trajektorie3d(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
 	connect(ui->chooseMapButton, &QPushButton::clicked,
 			this, &trajektorie3d::chooseMapClicked);
 
