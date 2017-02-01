@@ -94,40 +94,59 @@ void OgreWidget::initializeGL()
 
     ogreInitialization();
 
-
-	// Create the scene
-
-    //// Create a light
-	Ogre::Light* l = mSceneMgr->createLight("MainLight");
-	l->setPosition(20, 80, 50);
-
-    Ogre::Entity* startEnt = mSceneMgr->createEntity("Start", "startCube.mesh");
-	Ogre::SceneNode* startNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("StartNode");
-	startNode->setPosition(-5, -5, 0);
-	startNode->attachObject(startEnt);
-
-    Ogre::Entity* stopEnt = mSceneMgr->createEntity("Stop", "stopCube.mesh");
-	Ogre::SceneNode* stopNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("StopNode");
-	stopNode->setPosition(10, 5, 0);
-	stopNode->attachObject(stopEnt);
-
-    Ogre::Entity* ent1 = mSceneMgr->createEntity("blockCube.mesh");
-	Ogre::SceneNode* node1 = mSceneMgr->getRootSceneNode()->createChildSceneNode("Node1");
-	node1->setPosition(0, 0, 0);
-	node1->attachObject(ent1);
-
-    Ogre::Entity* ent2 = mSceneMgr->createEntity("blockCube.mesh");
-	Ogre::SceneNode* node2 = mSceneMgr->getRootSceneNode()->createChildSceneNode("Node2");
-	node2->setPosition(2, 5, 0);
-	node2->attachObject(ent2);
 }
 
-void OgreWidget::redrawScene()
+void OgreWidget::redrawScene(Map* map)
 {
-	mSceneMgr->clearScene();
-    repaint();
+    mSceneMgr->clearScene();
 
-    //Tutaj rysowanie mapy
+    // Create a light
+    Ogre::Light* l = mSceneMgr->createLight("MainLight");
+    l->setPosition(20, 80, 50);
+
+    int width = map->getWidth();
+    int depth = map->getDepth();
+    int centerX = width / 2;
+    int centerY = depth / 2;
+
+    //start from 1 becouse of map frame
+    for (int w = 1; w < width; w++)
+    {
+        for (int d = 1; d < depth; d++)
+        {
+            Cell cell = map->getMap3D()[w][d];
+            Ogre::SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+            Ogre::Entity* entity = NULL;
+            switch (cell.cell_state())
+            {
+            case Start:
+                entity = mSceneMgr->createEntity("Start", "startCube.mesh");
+                qDebug() << "Start at" << cell.cell_x() << cell.cell_y();
+                break;
+            case Koniec:
+                entity = mSceneMgr->createEntity("Stop", "stopCube.mesh");
+                qDebug() << "Stop at" << cell.cell_x() << cell.cell_y();
+                break;
+            case Zajeta:
+                entity = mSceneMgr->createEntity("blockCube.mesh");
+                break;
+            default:
+                break;
+            }
+
+            if(entity)
+            {
+                node->setPosition(cell.cell_x() - centerX, cell.cell_y() - centerY, 0);
+                node->attachObject(entity);
+            }
+        }
+    }
+
+    Ogre::Vector3 newPosition(0, 0, qMax(width, depth)*2);
+    mCamera->setPosition(newPosition);
+    mCamera->lookAt(-newPosition);
+
+    repaint();
 }
 
 void OgreWidget::turnCamera(Direction direction)

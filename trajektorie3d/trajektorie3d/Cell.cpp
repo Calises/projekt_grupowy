@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <string>
 
-Cell::Cell(int xx, int yy, int val, char st)
+Cell::Cell(int xx, int yy, int val, CellState st)
 {
 	x = xx;
 	y = yy;
@@ -20,10 +20,8 @@ void Cell::show_cell()
 {
 	cout << "x: " << x << " y: " << y << " val: " << value << " st: " << state << endl;
 }
-void Cell::change_cell(int xx, int yy, int val, char st)
+void Cell::change_cell(int val, CellState st)
 {
-	x = xx;
-	y = yy;
 	value = val;
 	state = st;
 }
@@ -39,7 +37,7 @@ int Cell::cell_value()
 {
 	return value;
 }
-char Cell::cell_state()
+CellState Cell::cell_state()
 {
 	return state;
 }

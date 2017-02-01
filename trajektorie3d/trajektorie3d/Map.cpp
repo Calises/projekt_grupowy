@@ -5,7 +5,6 @@
 
 using namespace std;
 
-
 Map::Map(int ww, int dd)
 {
 	w = ww;
@@ -13,15 +12,12 @@ Map::Map(int ww, int dd)
 	load(w, d);
 }
 
-
 Map::~Map()
 {
-
 	for (int i = 0; i < w + 2; i++) {
 		delete[] map3D[i];
 	}
 	delete[] map3D;
-
 }
 
 void Map::load(int ww, int dd)
@@ -40,9 +36,9 @@ void Map::load(int ww, int dd)
 		{
 			// ustawienie ramki dookola mapy
 			if (i == 0 || i == ww - 1 || j == 0 || j == dd - 1) {
-				map3D[i][j] = Cell(i, j, -1, 'f');
+				map3D[i][j] = Cell(i, j, -1, Zajeta);
 			}
-			else map3D[i][j] = Cell(i, j, 100, 'e');
+			else map3D[i][j] = Cell(i, j, 100, Wolna);
 			//map3D[i][j].show_cell(); - CZEMU TO NIE DZIALA ?
 		}
 	}
@@ -54,9 +50,6 @@ void Map::load(int ww, int dd)
 			map3D[i][j].show_cell();
 		}
 	}
-
-
-
 
 	//rysowanie
 	//show(map3D);
@@ -72,7 +65,6 @@ void Map::load(int ww, int dd)
 	for (int k = 0; k<Z; k++) {
 	arr3D[i][j][k] = 0;
 	*/
-
 }
 
 //void map::show(Cell **map3d)
@@ -96,15 +88,15 @@ void Map::show()
 
 void Map::setObstacle(int x, int y)
 {
-	map3D[x][y].change_cell(x, y, -1, 'f');
+	map3D[x][y].change_cell(-1, Zajeta);
 }
 void Map::setStart(int x, int y)
 {
-	map3D[x][y].change_cell(x, y, 1, 's');
+	map3D[x][y].change_cell(1, Start);
 }
 void Map::setStop(int x, int y)
 {
-	map3D[x][y].change_cell(x, y, 100, 'd');
+	map3D[x][y].change_cell(100, Koniec);
 }
 //pomocnicza
 int Map::returnValue(int x, int y)
