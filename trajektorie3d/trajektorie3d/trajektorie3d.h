@@ -5,6 +5,7 @@
 #include <QWidget>
 #include "ui_trajektorie3d.h"
 #include "ogrewidget.h"
+#include "Map.h"
 
 class trajektorie3d : public QMainWindow
 {
@@ -22,6 +23,8 @@ private:
 
 	OgreWidget* ogreWidget;
 	void chooseMapClicked();
+
+    Map* map = NULL;
 };
 
 #endif // TRAJEKTORIE3D_H

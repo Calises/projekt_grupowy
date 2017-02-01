@@ -22,6 +22,7 @@
 #include <QtOpenGL/QGLWidget>
 
 #include "utils.h"
+#include "Map.h"
 
 class OgreWidget : public QGLWidget
 {
@@ -32,7 +33,10 @@ public:
 
 	virtual ~OgreWidget();
 
-	void redrawScene();
+    /**
+    * Funkcja sluzaca do rysowania zadanej mapy
+    */
+	void redrawScene(Map* map);
 
     void turnCamera(Direction direction);
 
