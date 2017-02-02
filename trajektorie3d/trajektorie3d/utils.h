@@ -1,4 +1,5 @@
 #pragma once
+#include <QDebug>
 
 enum Direction {
     Left,

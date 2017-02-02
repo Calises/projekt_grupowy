@@ -98,11 +98,14 @@ void OgreWidget::initializeGL()
 
 void OgreWidget::redrawScene(Map* map)
 {
+    if (!map)
+        return;
+
     mSceneMgr->clearScene();
 
     int width = map->getWidth();
     int depth = map->getDepth();
-    int hight = 2;
+    int hight = 1;
     int centerX = width / 2;
     int centerY = depth / 2;
     int centerZ = hight / 2;
@@ -114,11 +117,11 @@ void OgreWidget::redrawScene(Map* map)
     sl->setPosition(-(width + 20), -(4 * depth + 20), 3 * hight + 20);
 
     //start from 1 becouse of map frame
-    for (int w = 1; w < width; w++)
+    for (int w = 1; w <= width; w++)
     {
-        for (int d = 1; d < depth; d++)
+        for (int d = 1; d <= depth; d++)
         {
-            for (int z = 1; z < hight; z++)
+            for (int z = 1; z <= hight; z++)
             {
                 Cell cell = map->getMap3D()[w][d];
                 Ogre::SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
