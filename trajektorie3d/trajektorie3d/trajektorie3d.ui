@@ -545,17 +545,17 @@
     <property name="title">
      <string>Plik</string>
     </property>
-    <addaction name="actionOtw_rz_map"/>
-    <addaction name="actionZapisz_map"/>
-    <addaction name="actionNowa_mapa"/>
+    <addaction name="actionLoadMap"/>
+    <addaction name="actionSaveMap"/>
+    <addaction name="actionNewMap"/>
     <addaction name="separator"/>
-    <addaction name="actionZamknij"/>
+    <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuPomoc">
     <property name="title">
      <string>Pomoc</string>
     </property>
-    <addaction name="actionO_programie"/>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuPlik"/>
    <addaction name="menuPomoc"/>
@@ -568,27 +568,27 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="actionZamknij">
+  <action name="actionClose">
    <property name="text">
     <string>Zamknij</string>
    </property>
   </action>
-  <action name="actionOtw_rz_map">
+  <action name="actionLoadMap">
    <property name="text">
     <string>Otwórz mapę</string>
    </property>
   </action>
-  <action name="actionZapisz_map">
+  <action name="actionSaveMap">
    <property name="text">
     <string>Zapisz mapę</string>
    </property>
   </action>
-  <action name="actionNowa_mapa">
+  <action name="actionNewMap">
    <property name="text">
     <string>Nowa mapa</string>
    </property>
   </action>
-  <action name="actionO_programie">
+  <action name="actionAbout">
    <property name="text">
     <string>O programie</string>
    </property>

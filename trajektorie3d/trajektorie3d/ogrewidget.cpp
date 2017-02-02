@@ -93,7 +93,6 @@ void OgreWidget::initializeGL()
     setAttribute(Qt::WA_NoBackground);
 
     ogreInitialization();
-
 }
 
 void OgreWidget::redrawScene(Map* map)
@@ -111,10 +110,11 @@ void OgreWidget::redrawScene(Map* map)
     int centerZ = hight / 2;
 
     // Create a light
+    Ogre::Vector3 lightPos(3 * width + 20, 8 * depth + 20, 4 * hight + 20);
     Ogre::Light* fl = mSceneMgr->createLight("FirstLight");
-    fl->setPosition(width + 20, 4 * depth + 20, 3 * hight + 20);
+    fl->setPosition(lightPos);
     Ogre::Light* sl = mSceneMgr->createLight("SecondLight");
-    sl->setPosition(-(width + 20), -(4 * depth + 20), 3 * hight + 20);
+    sl->setPosition(-lightPos.x, -lightPos.y, lightPos.z);
 
     //start from 1 becouse of map frame
     for (int w = 1; w <= width; w++)
