@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>trajektorie3dClass</class>
- <widget class="QMainWindow" name="trajektorie3dClass">
+ <class>Trajektorie3dClass</class>
+ <widget class="QMainWindow" name="Trajektorie3dClass">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>trajektorie3d</string>
+   <string>Trajektorie3d</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="centralLayout">
@@ -596,7 +596,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="trajektorie3d.qrc"/>
+  <include location="Trajektorie3d.qrc"/>
  </resources>
  <connections/>
 </ui>

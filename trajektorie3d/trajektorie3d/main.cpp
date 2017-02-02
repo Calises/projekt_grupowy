@@ -1,5 +1,5 @@
-#include "trajektorie3d.h"
-#include "ui_trajektorie3d.h"
+#include "Trajektorie3d.h"
+#include "ui_Trajektorie3d.h"
 #include <QtWidgets/QApplication>
 #include <QVBoxLayout>
 #include <QtWidgets/QGroupBox>
@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    trajektorie3d window;
+    Trajektorie3d window;
 
     window.setWindowTitle("Trajektorie 3D");
 
