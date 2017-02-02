@@ -3,9 +3,11 @@
 
 #include <QMainWindow>
 #include <QWidget>
+
 #include "ui_Trajektorie3d.h"
 #include "ogrewidget.h"
 #include "Map.h"
+#include "aboutwindow.h"
 
 class Trajektorie3d : public QMainWindow
 {
@@ -22,11 +24,13 @@ private:
     Ui::Trajektorie3dClass* ui;
 
 	OgreWidget* ogreWidget;
-	void chooseMapClicked();
+	void loadMap();
 
     Map* map = NULL;
 
     void saveMap();
+
+    AboutWindow* aboutWindow;
 };
 
 #endif // TRAJEKTORIE3D_H

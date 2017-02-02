@@ -13,7 +13,17 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
     ui->setupUi(this);
 
 	connect(ui->chooseMapButton, &QPushButton::clicked,
-			this, &Trajektorie3d::chooseMapClicked);
+			this, &Trajektorie3d::loadMap);
+
+    connect(ui->actionClose, &QAction::triggered,
+            this, &QMainWindow::close);
+    connect(ui->actionSaveMap, &QAction::triggered,
+            this, &Trajektorie3d::saveMap);
+    connect(ui->actionLoadMap, &QAction::triggered,
+            this, &Trajektorie3d::loadMap);
+
+    connect(ui->actionAbout, &QAction::triggered,
+            [=]() { aboutWindow->show(); });
 
     connect(ui->turnLeftButton, &QPushButton::clicked,
         [=](){ ogreWidget->turnCamera(Direction::Left); });
@@ -43,19 +53,22 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
     map->setObstacle(5, 3);
     map->setObstacle(5, 4);
     map->setObstacle(5, 5);
-    ogreWidget->redrawScene(map);
+
+    aboutWindow = new AboutWindow(this);
 }
 
 Trajektorie3d::~Trajektorie3d()
 {
 }
 
-void Trajektorie3d::chooseMapClicked()
+void Trajektorie3d::loadMap()
 {
     QString fileName = QFileDialog::getOpenFileName(this, QStringLiteral("Wybierz mapê"), "maps/",
                                                     QStringLiteral("Map files (*.tmap)"));
     if (fileName == 0)
         return;
+
+    ui->mapNameLabel->setText(fileName.split('/').last());
 
     QSettings settings(fileName, QSettings::IniFormat);
 
@@ -139,4 +152,7 @@ void Trajektorie3d::startAlgorithm()
 	ui->label_numOperations->setText(a);
 
 	map->show();
+
+    //tymczasowe wywo³anie, domyœlnie zamiast map wrzuciæ wynik algorytmu
+    ogreWidget->redrawScene(map);
 }
