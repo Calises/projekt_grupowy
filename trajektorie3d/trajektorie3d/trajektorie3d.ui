@@ -95,10 +95,13 @@
           <string>Prawo</string>
          </property>
          <property name="autoRepeat">
-          <bool>true</bool>
+          <bool>false</bool>
+         </property>
+         <property name="autoRepeatDelay">
+          <number>300</number>
          </property>
          <property name="autoRepeatInterval">
-          <number>500</number>
+          <number>100</number>
          </property>
         </widget>
        </item>

@@ -100,49 +100,54 @@ void OgreWidget::redrawScene(Map* map)
 {
     mSceneMgr->clearScene();
 
-    // Create a light
-    Ogre::Light* l = mSceneMgr->createLight("MainLight");
-    l->setPosition(20, 80, 50);
-
     int width = map->getWidth();
     int depth = map->getDepth();
+    int hight = 2;
     int centerX = width / 2;
     int centerY = depth / 2;
+    int centerZ = hight / 2;
+
+    // Create a light
+    Ogre::Light* fl = mSceneMgr->createLight("FirstLight");
+    fl->setPosition(width + 20, 4 * depth + 20, 3 * hight + 20);
+    Ogre::Light* sl = mSceneMgr->createLight("SecondLight");
+    sl->setPosition(-(width + 20), -(4 * depth + 20), 3 * hight + 20);
 
     //start from 1 becouse of map frame
     for (int w = 1; w < width; w++)
     {
         for (int d = 1; d < depth; d++)
         {
-            Cell cell = map->getMap3D()[w][d];
-            Ogre::SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-            Ogre::Entity* entity = NULL;
-            switch (cell.cell_state())
+            for (int z = 1; z < hight; z++)
             {
-            case Start:
-                entity = mSceneMgr->createEntity("Start", "startCube.mesh");
-                qDebug() << "Start at" << cell.cell_x() << cell.cell_y();
-                break;
-            case Koniec:
-                entity = mSceneMgr->createEntity("Stop", "stopCube.mesh");
-                qDebug() << "Stop at" << cell.cell_x() << cell.cell_y();
-                break;
-            case Zajeta:
-                entity = mSceneMgr->createEntity("blockCube.mesh");
-                break;
-            default:
-                break;
-            }
+                Cell cell = map->getMap3D()[w][d];
+                Ogre::SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+                Ogre::Entity* entity = NULL;
+                switch (cell.cell_state())
+                {
+                case Start:
+                    entity = mSceneMgr->createEntity("Start", "startCube.mesh");
+                    break;
+                case Koniec:
+                    entity = mSceneMgr->createEntity("Stop", "stopCube.mesh");
+                    break;
+                case Zajeta:
+                    entity = mSceneMgr->createEntity("blockCube.mesh");
+                    break;
+                default:
+                    break;
+                }
 
-            if(entity)
-            {
-                node->setPosition(cell.cell_x() - centerX, cell.cell_y() - centerY, 0);
-                node->attachObject(entity);
+                if(entity)
+                {
+                    node->setPosition(cell.cell_x() - centerX, cell.cell_y() - centerY, -centerZ);
+                    node->attachObject(entity);
+                }
             }
         }
     }
 
-    Ogre::Vector3 newPosition(0, 0, qMax(width, depth)*2);
+    Ogre::Vector3 newPosition(0, 0, qMax(width, qMax(depth, hight))*2);
     mCamera->setPosition(newPosition);
     mCamera->lookAt(-newPosition);
 
