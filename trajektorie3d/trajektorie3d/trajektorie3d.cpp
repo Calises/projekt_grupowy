@@ -41,6 +41,7 @@ void trajektorie3d::startAlgorithm()
 	ui.label_numOperations->setText(a);
 
 	map.show();
+        
 
 
 }

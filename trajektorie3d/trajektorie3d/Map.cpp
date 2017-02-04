@@ -60,7 +60,7 @@ void Map::load(int ww, int dd)
 
 	//rysowanie
 	//show(map3D);
-	//show();
+	show();
 
 
 	// MAPA 3D
@@ -88,7 +88,6 @@ void Map::show()
 			else cout << "| " << setw(3) << 100 << " "; // map3D[j][i].cell_value() << " ";
 		}
 		cout << endl;
-
 	}
 
 	system("PAUSE");
