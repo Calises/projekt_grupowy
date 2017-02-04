@@ -60,7 +60,7 @@ void Map::load(int ww, int dd)
 
 	//rysowanie
 	//show(map3D);
-	show();
+	//show();
 
 
 	// MAPA 3D
