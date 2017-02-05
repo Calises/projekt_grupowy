@@ -103,3 +103,7 @@ int Map::returnValue(int x, int y)
 {
 	return map3D[x][y].cell_value();
 }
+CellState Map::returnState(int x, int y)
+{
+    return map3D[x][y].cell_state();
+}

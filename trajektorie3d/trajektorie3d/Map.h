@@ -23,6 +23,7 @@ public:
 	void setStart(int x, int y);
 	void setStop(int x, int y);
 	int returnValue(int x, int y);
+    CellState returnState(int x, int y);
     int getWidth() { return w; }
     int getDepth() { return d; }
     Cell **getMap3D() { return map3D; }
