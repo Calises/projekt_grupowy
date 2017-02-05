@@ -123,16 +123,15 @@ void OgreWidget::redrawScene(Map* map)
         {
             for (int z = 1; z <= hight; z++)
             {
-                Cell cell = map->getMap3D()[w][d];
                 Ogre::SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
                 Ogre::Entity* entity = NULL;
-                switch (cell.cell_state())
+                switch (map->returnState(w, d))
                 {
                 case Start:
-                    entity = mSceneMgr->createEntity("Start", "startCube.mesh");
+                    entity = mSceneMgr->createEntity("startCube.mesh");
                     break;
                 case Koniec:
-                    entity = mSceneMgr->createEntity("Stop", "stopCube.mesh");
+                    entity = mSceneMgr->createEntity("stopCube.mesh");
                     break;
                 case Zajeta:
                     entity = mSceneMgr->createEntity("blockCube.mesh");
@@ -143,7 +142,7 @@ void OgreWidget::redrawScene(Map* map)
 
                 if(entity)
                 {
-                    node->setPosition(cell.cell_x() - centerX, cell.cell_y() - centerY, -centerZ);
+                    node->setPosition(w - centerX, d - centerY, -centerZ);
                     node->attachObject(entity);
                 }
             }

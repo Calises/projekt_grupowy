@@ -77,7 +77,6 @@ void Trajektorie3d::loadMap()
     int height = settings.value("hight").toInt();
     map = new Map(width, depth);
 
-    Cell **cellsMap = map->getMap3D();
     for (int w = 1; w <= width; w++)
     {
         settings.beginGroup(QString::number(w));
@@ -88,8 +87,19 @@ void Trajektorie3d::loadMap()
             {
                 CellState newState =
                     CellState(settings.value(QString::number(h),CellState::Wolna).toInt());
-                if (newState != CellState::Wolna)
-                    cellsMap[w][d].change_cell(0, newState);
+                switch(newState)
+                {
+                case CellState::Zajeta:
+                    map->setObstacle(w, d);
+                    break;
+                case CellState::Start:
+                    map->setStart(w, d);
+                    break;
+                case CellState::Koniec:
+                    map->setStop(w, d);
+                    break;
+                default:
+                    break;
             }
             settings.endGroup();
         }
@@ -119,7 +129,6 @@ void Trajektorie3d::saveMap()
     int height = 1;
     settings.setValue("hight", height);
 
-    Cell **cellsMap = map->getMap3D();
     for (int w = 1; w <= width; w++)
     {
         settings.beginGroup(QString::number(w));
@@ -128,7 +137,7 @@ void Trajektorie3d::saveMap()
             settings.beginGroup(QString::number(d));
             for (int h = 1; h <= height; h++)
             {
-                CellState state = cellsMap[w][d].cell_state();
+                CellState state = map->returnState(w, d);
                 if (state != CellState::Wolna)
                     settings.setValue(QString::number(h), state);
             }
