@@ -8,6 +8,8 @@
 #include "ogrewidget.h"
 #include "Map.h"
 #include "aboutwindow.h"
+#include "EditMapAdd.h"
+#include "RemoveObstacle.h"
 
 class Trajektorie3d : public QMainWindow
 {
@@ -19,6 +21,7 @@ public:
 
 public slots:
     void startAlgorithm();
+	void dialogIsFinished(int);
 
 private:
     Ui::Trajektorie3dClass* ui;
@@ -29,6 +32,8 @@ private:
     Map* map = NULL;
 
     void saveMap();
+	void showEditMap(std::string, CellState);
+	void removeObstacle();
 
     AboutWindow* aboutWindow;
 };
