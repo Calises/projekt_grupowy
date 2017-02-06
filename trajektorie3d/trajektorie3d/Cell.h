@@ -9,7 +9,8 @@ enum CellState {
     Wolna,
     Zajeta,
     Start,
-    Koniec
+    Koniec,
+    Droga
 };
 
 class Cell

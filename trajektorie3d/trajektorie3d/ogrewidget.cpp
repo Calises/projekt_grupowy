@@ -136,6 +136,9 @@ void OgreWidget::redrawScene(Map* map)
                 case Zajeta:
                     entity = mSceneMgr->createEntity("blockCube.mesh");
                     break;
+                case Droga:
+                    entity = mSceneMgr->createEntity("traceCube.mesh");
+                    break;
                 default:
                     break;
                 }

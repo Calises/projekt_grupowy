@@ -24,6 +24,7 @@ public:
 	void setStart(int x, int y);
 	void setStop(int x, int y);
 	void setEmpty(int x, int y);
+    void setTrace(int x, int y);
 	Cell getStart();
 	Cell getStop();
 	std::vector <Cell> getObstacleList();
