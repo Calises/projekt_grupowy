@@ -116,19 +116,20 @@ void Trajektorie3d::loadMap()
             {
                 CellState newState =
                     CellState(settings.value(QString::number(h),CellState::Wolna).toInt());
-                switch(newState)
-                {
-                case CellState::Zajeta:
-                    map->setObstacle(w, d);
-                    break;
-                case CellState::Start:
-                    map->setStart(w, d);
-                    break;
-                case CellState::Koniec:
-                    map->setStop(w, d);
-                    break;
-                default:
-                    break;
+				switch (newState)
+				{
+				case CellState::Zajeta:
+					map->setObstacle(w, d);
+					break;
+				case CellState::Start:
+					map->setStart(w, d);
+					break;
+				case CellState::Koniec:
+					map->setStop(w, d);
+					break;
+				default:
+					break;
+				}
             }
             settings.endGroup();
         }
