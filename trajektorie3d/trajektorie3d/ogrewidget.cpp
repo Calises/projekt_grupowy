@@ -104,13 +104,13 @@ void OgreWidget::redrawScene(Map* map)
 
     int width = map->getWidth();
     int depth = map->getDepth();
-    int hight = 1;
+    int height = map->getHeight();
     int centerX = width / 2;
     int centerY = depth / 2;
-    int centerZ = hight / 2;
+    int centerZ = height / 2;
 
     // Create a light
-    Ogre::Vector3 lightPos(3 * width + 20, 8 * depth + 20, 4 * hight + 20);
+    Ogre::Vector3 lightPos(3 * width + 20, 8 * depth + 20, 4 * height + 20);
     Ogre::Light* fl = mSceneMgr->createLight("FirstLight");
     fl->setPosition(lightPos);
     Ogre::Light* sl = mSceneMgr->createLight("SecondLight");
@@ -121,11 +121,11 @@ void OgreWidget::redrawScene(Map* map)
     {
         for (int d = 1; d <= depth; d++)
         {
-            for (int z = 1; z <= hight; z++)
+            for(int z = 1; z <= height; z++)
             {
                 Ogre::SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
                 Ogre::Entity* entity = NULL;
-                switch (map->returnState(w, d))
+                switch (map->returnState(w, d, z))
                 {
                 case Start:
                     entity = mSceneMgr->createEntity("startCube.mesh");
@@ -145,14 +145,14 @@ void OgreWidget::redrawScene(Map* map)
 
                 if(entity)
                 {
-                    node->setPosition(w - centerX, d - centerY, -centerZ);
+                    node->setPosition(w - centerX, d - centerY, z - centerZ);
                     node->attachObject(entity);
                 }
             }
         }
     }
 
-    Ogre::Vector3 newPosition(0, 0, qMax(width, qMax(depth, hight))*2);
+    Ogre::Vector3 newPosition(0, 0, qMax(width, qMax(depth, height)) * 2);
     mCamera->setPosition(newPosition);
     mCamera->lookAt(-newPosition);
 
