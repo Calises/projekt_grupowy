@@ -105,6 +105,11 @@ void Map::setEmpty(int x, int y)
 	map3D[x][y].change_cell(100, Wolna);
 }
 
+void Map::setTrace(int x, int y)
+{
+    map3D[x][y].change_cell(200, Droga);
+}
+
 Cell Map::getStart() {
 	for (int i = 1; i <= w; i++) {
 		for (int j = 1; j <= d; j++) {

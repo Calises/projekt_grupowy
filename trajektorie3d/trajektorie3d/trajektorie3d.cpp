@@ -85,7 +85,7 @@ Trajektorie3d::~Trajektorie3d()
 
 void Trajektorie3d::dialogIsFinished(int result) {
 	if (result == QDialog::Accepted) {
-		//oœwierz widok po edycji mapy
+        ogreWidget->redrawScene(map);
 		return;
 	}
 }
