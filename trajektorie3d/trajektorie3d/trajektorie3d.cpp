@@ -52,16 +52,14 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
 	ui->centralLayout->addWidget(ogreWidget, 0, 0, 1, 1);
 
     // tworzenie przykladowej mapy
-    int n = 10;
-    int m = 10;
-    map = new Map(n, m);
-    map->setStart(1, 1);
-    map->setStop(9, 9);
-    map->setObstacle(1, 0);
-    map->setObstacle(5, 2);
-    map->setObstacle(5, 3);
-    map->setObstacle(5, 4);
-    map->setObstacle(5, 5);
+    map = new Map(10, 10, 10);
+    map->setStart(1, 1, 1);
+    map->setStop(9, 9, 1);
+    map->setObstacle(1, 0, 1);
+    map->setObstacle(5, 2, 1);
+    map->setObstacle(5, 3, 1);
+    map->setObstacle(5, 4, 1);
+    map->setObstacle(5, 5, 1);
 
 	aboutWindow = new AboutWindow(this); 
 }
@@ -103,8 +101,8 @@ void Trajektorie3d::loadMap()
 
     int width = settings.value("width").toInt();
     int depth = settings.value("depth").toInt();
-    int height = settings.value("hight").toInt();
-    map = new Map(width, depth);
+    int height = settings.value("height").toInt();
+    map = new Map(width, depth, height);
 
     for (int w = 1; w <= width; w++)
     {
@@ -116,20 +114,24 @@ void Trajektorie3d::loadMap()
             {
                 CellState newState =
                     CellState(settings.value(QString::number(h),CellState::Wolna).toInt());
-				switch (newState)
-				{
-				case CellState::Zajeta:
-					map->setObstacle(w, d);
-					break;
-				case CellState::Start:
-					map->setStart(w, d);
-					break;
-				case CellState::Koniec:
-					map->setStop(w, d);
-					break;
-				default:
-					break;
-				}
+
+                switch(newState)
+                {
+                case CellState::Zajeta:
+                    map->setObstacle(w, d, h);
+                    break;
+                case CellState::Start:
+                    map->setStart(w, d, h);
+                    break;
+                case CellState::Koniec:
+                    map->setStop(w, d, h);
+                    break;
+                case CellState::Droga:
+                    map->setTrace(w, d, h);
+                    break;
+                default:
+                    break;
+                }
             }
             settings.endGroup();
         }
@@ -156,8 +158,8 @@ void Trajektorie3d::saveMap()
     settings.setValue("width", width);
     int depth = map->getDepth();
     settings.setValue("depth", depth);
-    int height = 1;
-    settings.setValue("hight", height);
+    int height = map->getHeight();
+    settings.setValue("height", height);
 
     for (int w = 1; w <= width; w++)
     {
@@ -167,7 +169,7 @@ void Trajektorie3d::saveMap()
             settings.beginGroup(QString::number(d));
             for (int h = 1; h <= height; h++)
             {
-                CellState state = map->returnState(w, d);
+                CellState state = map->returnState(w, d, h);
                 if (state != CellState::Wolna)
                     settings.setValue(QString::number(h), state);
             }
@@ -187,7 +189,7 @@ void Trajektorie3d::startAlgorithm()
 
 	std::cout << "Hej! ";
 
-	QString a = QString::number(map->returnValue(1, 1));
+	QString a = QString::number(map->returnValue(1, 1, 1));
 	ui->label_numOperations->setText(a);
 
 	map->show();
