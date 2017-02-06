@@ -11,7 +11,6 @@ Cell::Cell(int xx, int yy, int val, char st)
 	state = st;
 }
 
-
 Cell::~Cell()
 {
 }

@@ -9,8 +9,7 @@ trajektorie3d::trajektorie3d(QWidget *parent)
     ui.setupUi(this);
 
 	QObject::connect(ui.button_start, SIGNAL(clicked()), this, SLOT(startAlgorithm()));
-	
-	
+		
 }
 
 trajektorie3d::~trajektorie3d()
