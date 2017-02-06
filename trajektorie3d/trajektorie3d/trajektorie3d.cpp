@@ -34,6 +34,15 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
     connect(ui->turnDownButton, &QPushButton::clicked,
         [=](){ ogreWidget->turnCamera(Direction::Down); });
 
+	connect(ui->setStartButton, &QPushButton::clicked,
+		[=]() {showEditMap("Start", CellState::Start); });
+	connect(ui->setStopButton, &QPushButton::clicked,
+		[=]() {showEditMap("Stop", CellState::Koniec);  });
+	connect(ui->addObstacleButton, &QPushButton::clicked,
+		[=]() {showEditMap("Przeszkoda", CellState::Zajeta);  });
+	connect(ui->removeObstacleButton, &QPushButton::clicked,
+		[=]() {removeObstacle();  });
+
     QObject::connect(ui->button_start, SIGNAL(clicked()), this, SLOT(startAlgorithm()));
 
 	ogreWidget = new OgreWidget(this);
@@ -54,11 +63,31 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
     map->setObstacle(5, 4);
     map->setObstacle(5, 5);
 
-    aboutWindow = new AboutWindow(this);
+	aboutWindow = new AboutWindow(this); 
+}
+
+void Trajektorie3d::showEditMap(std::string name, CellState cS){
+	EditMapAdd* editMappAddStart = new EditMapAdd(this);
+	QObject::connect(editMappAddStart, SIGNAL(finished(int)), this, SLOT(dialogIsFinished(int)));
+	editMappAddStart->setEditMap(name, map, cS);
+	editMappAddStart->show();
+}
+
+void Trajektorie3d::removeObstacle() {
+	RemoveObstacle* ro = new RemoveObstacle(this, map);
+	QObject::connect(ro, SIGNAL(finished(int)), this, SLOT(dialogIsFinished(int)));
+	ro->show();
 }
 
 Trajektorie3d::~Trajektorie3d()
 {
+}
+
+void Trajektorie3d::dialogIsFinished(int result) {
+	if (result == QDialog::Accepted) {
+		//oœwierz widok po edycji mapy
+		return;
+	}
 }
 
 void Trajektorie3d::loadMap()
@@ -87,19 +116,20 @@ void Trajektorie3d::loadMap()
             {
                 CellState newState =
                     CellState(settings.value(QString::number(h),CellState::Wolna).toInt());
-                switch(newState)
-                {
-                case CellState::Zajeta:
-                    map->setObstacle(w, d);
-                    break;
-                case CellState::Start:
-                    map->setStart(w, d);
-                    break;
-                case CellState::Koniec:
-                    map->setStop(w, d);
-                    break;
-                default:
-                    break;
+				switch (newState)
+				{
+				case CellState::Zajeta:
+					map->setObstacle(w, d);
+					break;
+				case CellState::Start:
+					map->setStart(w, d);
+					break;
+				case CellState::Koniec:
+					map->setStop(w, d);
+					break;
+				default:
+					break;
+				}
             }
             settings.endGroup();
         }

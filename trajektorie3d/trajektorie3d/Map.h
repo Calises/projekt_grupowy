@@ -1,5 +1,6 @@
 #pragma once
 #include "Cell.h"
+#include <vector>
 
 class Map
 {
@@ -22,6 +23,10 @@ public:
 	void setObstacle(int x, int y);
 	void setStart(int x, int y);
 	void setStop(int x, int y);
+	void setEmpty(int x, int y);
+	Cell getStart();
+	Cell getStop();
+	std::vector <Cell> getObstacleList();
 	int returnValue(int x, int y);
     CellState returnState(int x, int y);
     int getWidth() { return w; }

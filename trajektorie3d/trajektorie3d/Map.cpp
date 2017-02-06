@@ -2,6 +2,7 @@
 #include "Cell.h"
 #include <iomanip>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -96,8 +97,49 @@ void Map::setStart(int x, int y)
 }
 void Map::setStop(int x, int y)
 {
-	map3D[x][y].change_cell(100, Koniec);
+	map3D[x][y].change_cell(100, Koniec); //? 100 czy 0
 }
+
+void Map::setEmpty(int x, int y)
+{
+	map3D[x][y].change_cell(100, Wolna);
+}
+
+Cell Map::getStart() {
+	for (int i = 1; i <= w; i++) {
+		for (int j = 1; j <= d; j++) {
+			Cell cell = map3D[i][j];
+			if (cell.cell_state() == Start) {
+				return cell;
+			}
+		}
+	}
+}
+
+Cell Map::getStop() {
+	for (int i = 1; i <= w; i++) {
+		for (int j = 1; j <= d; j++) {
+			Cell cell = map3D[i][j];
+			if (cell.cell_state() == Koniec) {
+				return cell;
+			}
+		}
+	}
+}
+
+std::vector <Cell> Map::getObstacleList() {
+	std::vector <Cell> obstacleCell;
+	for (int i = 1; i <= w; i++) {
+		for (int j = 1; j <= d; j++) {
+			Cell cell = map3D[i][j];
+			if (cell.cell_state() == Zajeta) {
+				obstacleCell.push_back(cell);
+			}
+		}
+	}
+	return obstacleCell;
+}
+
 //pomocnicza
 int Map::returnValue(int x, int y)
 {
