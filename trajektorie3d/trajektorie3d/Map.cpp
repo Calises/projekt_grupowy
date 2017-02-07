@@ -137,6 +137,7 @@ Cell Map::getStart() {
             }
 		}
 	}
+	return Cell(0, 0, 0, 1, Start);
 }
 
 Cell Map::getStop() {
@@ -150,6 +151,7 @@ Cell Map::getStop() {
             }
 		}
 	}
+	return Cell(0, 0, 0, 100, Koniec);
 }
 
 std::vector <Cell> Map::getObstacleList() {
