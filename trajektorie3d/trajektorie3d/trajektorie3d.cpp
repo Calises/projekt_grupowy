@@ -45,11 +45,11 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
 
     QObject::connect(ui->button_start, SIGNAL(clicked()), this, SLOT(startAlgorithm()));
 
-	ogreWidget = new OgreWidget(this);
-	ogreWidget->setFixedWidth(640);
-	ogreWidget->setFixedHeight(480);
+	//ogreWidget = new OgreWidget(this);
+	//ogreWidget->setFixedWidth(640);
+	//ogreWidget->setFixedHeight(480);
 
-	ui->centralLayout->addWidget(ogreWidget, 0, 0, 1, 1);
+	//ui->centralLayout->addWidget(ogreWidget, 0, 0, 1, 1);
 
     // tworzenie przykladowej mapy
     map = new Map(10, 10, 10);
