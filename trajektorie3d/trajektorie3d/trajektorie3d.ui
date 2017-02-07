@@ -261,8 +261,8 @@
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>40</y>
-            <width>171</width>
+            <y>60</y>
+            <width>221</width>
             <height>61</height>
            </rect>
           </property>
@@ -299,8 +299,8 @@
          <widget class="QLabel" name="label_3">
           <property name="geometry">
            <rect>
-            <x>20</x>
-            <y>20</y>
+            <x>19</x>
+            <y>23</y>
             <width>47</width>
             <height>13</height>
            </rect>
@@ -313,7 +313,7 @@
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>110</y>
+            <y>143</y>
             <width>121</width>
             <height>16</height>
            </rect>
@@ -326,7 +326,7 @@
           <property name="geometry">
            <rect>
             <x>140</x>
-            <y>110</y>
+            <y>140</y>
             <width>42</width>
             <height>22</height>
            </rect>
@@ -337,7 +337,7 @@
            <rect>
             <x>70</x>
             <y>20</y>
-            <width>111</width>
+            <width>161</width>
             <height>22</height>
            </rect>
           </property>
@@ -532,8 +532,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="Trajektorie3d.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

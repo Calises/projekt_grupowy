@@ -5,12 +5,21 @@
 #include <QCoreApplication>
 #include <QSettings>
 #include <QFileDialog>
+#include <qmessagebox.h>
 
 Trajektorie3d::Trajektorie3d(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::Trajektorie3dClass)
 {
     ui->setupUi(this);
+
+    // widgety algorytm ------------------------------------------
+    ui->comboBox_algorithm->addItem("Propagacja Fali");
+    ui->comboBox_algorithm->addItem("Sztuczne Pola Potencjalowe");
+    ui->radioButton_Manhattan->setChecked(true);
+    connect(ui->button_start, &QPushButton::clicked,
+        [=]() {Start();  });
+    // -----------------------------------------------------------
 
 	connect(ui->chooseMapButton, &QPushButton::clicked,
 			this, &Trajektorie3d::loadMap);
@@ -43,7 +52,8 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
 	connect(ui->removeObstacleButton, &QPushButton::clicked,
 		[=]() {removeObstacle();  });
 
-    QObject::connect(ui->button_start, SIGNAL(clicked()), this, SLOT(startAlgorithm()));
+    
+
 
 	//ogreWidget = new OgreWidget(this);
 	//ogreWidget->setFixedWidth(640);
@@ -179,21 +189,58 @@ void Trajektorie3d::saveMap()
     }
 }
 
-void Trajektorie3d::startAlgorithm()
+enum Metric {
+    Manhattan,
+    Czebyszew,
+};
+
+void Trajektorie3d::Start()
+{
+    Metric metric;
+    if (ui->radioButton_Manhattan->isChecked())
+    {
+        ui->label_numOperations->setText("Manhat");
+        metric = Manhattan;
+    }
+       
+    else if (ui->radioButton_Czebyszew->isChecked())
+    {
+        ui->label_numOperations->setText("czeb");
+        metric = Czebyszew;
+    }
+        
+    else
+        QMessageBox::warning(this,"Uwaga", "Zanacz matryke!");
+
+
+
+    if (ui->comboBox_algorithm->currentIndex() == 0)
+    {
+        //ui->label_numOperations->setText("propagacja fali");
+        //StartAlg_Propagacja();
+    }     
+    else if (ui->comboBox_algorithm->currentIndex() == 1)
+    {
+        //ui->label_numOperations->setText("drugi algorytm");
+        //StartAlg_SztucznePotencjaly
+    }      
+}
+
+void Trajektorie3d::StartAlg_Propagacja()
 {
     if (!map)
         return;
 
-	// change the text
-	ui->button_start->setText("GO");
+    // change the text
+    ui->button_start->setText("GO");
 
-	std::cout << "Hej! ";
+    std::cout << "Hej! ";
 
-	QString a = QString::number(map->returnValue(1, 1, 1));
-	ui->label_numOperations->setText(a);
+    QString a = QString::number(map->returnValue(1, 1, 1));
+    //ui->label_numOperations->setText(a);
 
-	map->show();
+    map->show();
 
     //tymczasowe wywo³anie, domyœlnie zamiast map wrzuciæ wynik algorytmu
-    ogreWidget->redrawScene(map);
+    //ogreWidget->redrawScene(map);
 }

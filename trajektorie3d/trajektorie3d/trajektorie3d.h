@@ -20,7 +20,8 @@ public:
     ~Trajektorie3d();
 
 public slots:
-    void startAlgorithm();
+    void Start();
+    void StartAlg_Propagacja();
 	void dialogIsFinished(int);
 
 private:

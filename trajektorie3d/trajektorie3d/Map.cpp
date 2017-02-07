@@ -107,11 +107,11 @@ void Map::setObstacle(int x, int y, int z)
 }
 void Map::setStart(int x, int y, int z)
 {
-    map3D[x][y][z].change_cell(1, Start);
+    map3D[x][y][z].change_cell(101, Start);
 }
 void Map::setStop(int x, int y, int z)
 {
-    map3D[x][y][z].change_cell(100, Koniec); //? 100 czy 0
+    map3D[x][y][z].change_cell(0, Koniec); //? 100 czy 0
 }
 
 void Map::setEmpty(int x, int y, int z)
