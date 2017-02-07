@@ -18,7 +18,6 @@ void EditMapAdd::setEditMap(std::string name, Map *m, CellState cS) {
 	Cell cell;
 	Cell *p = &cell;
 	//Set p to hold NULL
-	p = NULL;
 
 	if (cellState == CellState::Start) {
 		cell = map->getStart();
@@ -76,7 +75,7 @@ void EditMapAdd::accept2() {
 			if (w == startCell.cell_x() && d == startCell.cell_y() && h == startCell.cell_z()) {
 				ui->errorLabel->setText("Tutaj znajduje się START");
 			} else if (!(w == lastCell.cell_x() && d == lastCell.cell_y() && h == lastCell.cell_z())) {
-				map->setStop(w, d);
+				map->setStop(w, d, h);
 				map->setEmpty(lastCell.cell_x(), lastCell.cell_y(), lastCell.cell_z());
 				QDialog::accept(); // to close the dialog and return 1
 			}
