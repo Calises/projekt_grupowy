@@ -12,8 +12,14 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
 {
     ui->setupUi(this);
 
-	connect(ui->chooseMapButton, &QPushButton::clicked,
+	connect(ui->openMapButton, &QPushButton::clicked,
 			this, &Trajektorie3d::loadMap);
+    connect(ui->saveMapButton, &QPushButton::clicked,
+            this, &Trajektorie3d::saveMap);
+    connect(ui->newMapButton, &QPushButton::clicked,
+            this, &Trajektorie3d::newMap);
+    connect(ui->clearMapButton, &QPushButton::clicked,
+            this, &Trajektorie3d::clearMap);
 
     connect(ui->actionClose, &QAction::triggered,
             this, &QMainWindow::close);
@@ -21,6 +27,8 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
             this, &Trajektorie3d::saveMap);
     connect(ui->actionLoadMap, &QAction::triggered,
             this, &Trajektorie3d::loadMap);
+    connect(ui->actionNewMap, &QAction::triggered,
+            this, &Trajektorie3d::newMap);
 
     connect(ui->actionAbout, &QAction::triggered,
             [=]() { aboutWindow->show(); });
@@ -61,7 +69,8 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
     map->setObstacle(5, 4, 1);
     map->setObstacle(5, 5, 1);
 
-	aboutWindow = new AboutWindow(this); 
+    aboutWindow = new AboutWindow(this);
+    newDimensionsDialog = new DimensionsDialog(this);
 }
 
 void Trajektorie3d::showEditMap(std::string name, CellState cS){
@@ -149,6 +158,8 @@ void Trajektorie3d::saveMap()
     if (fileName == 0)
         return;
 
+    ui->mapNameLabel->setText(fileName.split('/').last());
+
     if (QFile::exists(fileName))
         QFile::remove(fileName);
 
@@ -177,6 +188,21 @@ void Trajektorie3d::saveMap()
         }
         settings.endGroup();
     }
+}
+
+void Trajektorie3d::newMap()
+{
+    bool ok = newDimensionsDialog->exec();
+    if(!ok)
+        return;
+
+    delete map;
+    map = new Map(newDimensionsDialog->getX(),
+                  newDimensionsDialog->getY(),
+                  newDimensionsDialog->getZ());
+
+    ui->mapNameLabel->setText(QString());
+    ogreWidget->redrawScene(map);
 }
 
 void Trajektorie3d::startAlgorithm()

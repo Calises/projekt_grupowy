@@ -10,6 +10,7 @@
 #include "aboutwindow.h"
 #include "EditMapAdd.h"
 #include "RemoveObstacle.h"
+#include "dimensionsdialog.h"
 
 class Trajektorie3d : public QMainWindow
 {
@@ -27,15 +28,19 @@ private:
     Ui::Trajektorie3dClass* ui;
 
 	OgreWidget* ogreWidget;
-	void loadMap();
 
     Map* map = NULL;
 
-    void saveMap();
 	void showEditMap(std::string, CellState);
 	void removeObstacle();
 
     AboutWindow* aboutWindow;
+    DimensionsDialog* newDimensionsDialog;
+
+private slots:
+    void loadMap();
+    void saveMap();
+    void newMap();
 };
 
 #endif // TRAJEKTORIE3D_H

@@ -92,6 +92,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_RemoveObstacle.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dimensionsdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dimensionsdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="dimensionsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="trajektorie3d.h">
@@ -124,6 +133,12 @@
     <CustomBuild Include="RemoveObstacle.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="dimensionsdialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="dimensionsdialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_trajektorie3d.h">
@@ -145,6 +160,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_RemoveObstacle.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_dimensionsdialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

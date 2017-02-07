@@ -228,15 +228,36 @@
          <property name="title">
           <string>Wybór mapy</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QPushButton" name="chooseMapButton">
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="2" column="0">
+           <widget class="QPushButton" name="newMapButton">
             <property name="text">
-             <string>Wybierz mapę</string>
+             <string>Nowa mapa</string>
             </property>
            </widget>
           </item>
-          <item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="openMapButton">
+            <property name="text">
+             <string>Otwórz mapę</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="saveMapButton">
+            <property name="text">
+             <string>Zapisz mapę</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="clearMapButton">
+            <property name="text">
+             <string>Czyść ścieżki</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
            <widget class="QLabel" name="mapNameLabel">
             <property name="text">
              <string/>
@@ -342,8 +363,18 @@
            </rect>
           </property>
           <property name="currentText">
-           <string/>
+           <string>Propagacji fali</string>
           </property>
+          <item>
+           <property name="text">
+            <string>Propagacji fali</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Sztucznych pól potencjałowych</string>
+           </property>
+          </item>
          </widget>
         </widget>
        </item>
@@ -475,7 +506,7 @@
      <x>0</x>
      <y>0</y>
      <width>935</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuPlik">
@@ -485,6 +516,7 @@
     <addaction name="actionLoadMap"/>
     <addaction name="actionSaveMap"/>
     <addaction name="actionNewMap"/>
+    <addaction name="actionClearMap"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
@@ -530,10 +562,15 @@
     <string>O programie</string>
    </property>
   </action>
+  <action name="actionClearMap">
+   <property name="text">
+    <string>Czyść mapę</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="Trajektorie3d.qrc"/>
+  <include location="Resources/licenses.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -20,6 +20,8 @@ Map::~Map()
     {
         for(int j = 0; j < d + 2; j++)
 		    delete[] map3D[i][j];
+
+        delete[] map3D[i];
 	}
 	delete[] map3D;
 }
