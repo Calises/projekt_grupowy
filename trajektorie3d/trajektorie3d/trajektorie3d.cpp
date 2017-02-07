@@ -232,6 +232,8 @@ void Trajektorie3d::startAlgorithm()
     if (!map)
         return;
 
+    map->updateBuffer(ui->spinBox_przeszkoda->value());
+
 	// change the text
 	ui->button_start->setText("GO");
 

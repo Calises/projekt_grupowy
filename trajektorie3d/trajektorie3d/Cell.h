@@ -10,7 +10,8 @@ enum CellState {
     Zajeta,
     Start,
     Koniec,
-    Droga
+    Droga,
+    Bufor
 };
 
 class Cell
