@@ -11,6 +11,11 @@
 #include "EditMapAdd.h"
 #include "RemoveObstacle.h"
 
+enum Metric {
+    Manhattan,
+    Czebyszew,
+};
+
 class Trajektorie3d : public QMainWindow
 {
     Q_OBJECT
@@ -20,8 +25,7 @@ public:
     ~Trajektorie3d();
 
 public slots:
-    void Start();
-    void StartAlg_Propagacja();
+    void Start();  
 	void dialogIsFinished(int);
 
 private:
@@ -35,7 +39,9 @@ private:
     void saveMap();
 	void showEditMap(std::string, CellState);
 	void removeObstacle();
-
+    void StartAlg_Propagacja(Metric metric);
+    void przekaz(Cell endCell, int lengthTrace);
+    void searchTrace(Cell endCell, int lengthTrace);
     AboutWindow* aboutWindow;
 };
 

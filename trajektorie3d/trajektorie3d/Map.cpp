@@ -123,6 +123,14 @@ void Map::setTrace(int x, int y, int z)
 {
     map3D[x][y][z].change_cell(200, Droga);
 }
+void Map::setValue(int x, int y, int z, int value)
+{
+    map3D[x][y][z].change_cell(value, Wolna);
+}
+Cell Map::getCell(int x, int y, int z)
+{
+    return map3D[x][y][z];
+}
 
 Cell Map::getStart() {
 	for (int i = 1; i <= w; i++) {

@@ -24,8 +24,10 @@ public:
     void setStop(int x, int y, int z = 1);
     void setEmpty(int x, int y, int z = 1);
     void setTrace(int x, int y, int z = 1);
+    void Map::setValue(int x, int y, int z, int value);
 	Cell getStart();
 	Cell getStop();
+    Cell getCell(int x, int y, int z);
 	std::vector <Cell> getObstacleList();
     int returnValue(int x, int y, int z);
     CellState returnState(int x, int y, int z);
