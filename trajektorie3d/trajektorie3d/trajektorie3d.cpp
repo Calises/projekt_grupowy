@@ -29,6 +29,8 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
             this, &Trajektorie3d::loadMap);
     connect(ui->actionNewMap, &QAction::triggered,
             this, &Trajektorie3d::newMap);
+    connect(ui->actionClearMap, &QAction::triggered,
+            this, &Trajektorie3d::clearMap);
 
     connect(ui->actionAbout, &QAction::triggered,
             [=]() { aboutWindow->show(); });
@@ -202,6 +204,26 @@ void Trajektorie3d::newMap()
                   newDimensionsDialog->getZ());
 
     ui->mapNameLabel->setText(QString());
+    ogreWidget->redrawScene(map);
+}
+
+void Trajektorie3d::clearMap()
+{
+    int width = map->getWidth();
+    int depth = map->getWidth();
+    int height = map->getWidth();
+
+    for(int w = 1; w <= width; w++)
+    {
+        for(int d = 1; d <= depth; d++)
+        {
+            for(int h = 1; h <= height; h++)
+            {
+                if(map->returnState(w, d, h) == CellState::Droga)
+                    map->setEmpty(w,d,h);
+            }
+        }
+    }
     ogreWidget->redrawScene(map);
 }
 

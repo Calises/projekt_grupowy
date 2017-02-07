@@ -41,6 +41,7 @@ private slots:
     void loadMap();
     void saveMap();
     void newMap();
+    void clearMap();
 };
 
 #endif // TRAJEKTORIE3D_H
