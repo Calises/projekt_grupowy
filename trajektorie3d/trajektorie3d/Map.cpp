@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+#include <QtGlobal>
+
 using namespace std;
 
 Map::Map(int ww, int dd, int hh)
@@ -126,6 +128,11 @@ void Map::setTrace(int x, int y, int z)
     map3D[x][y][z].change_cell(200, Droga);
 }
 
+void Map::setBuffer(int x, int y, int z)
+{
+    map3D[x][y][z].change_cell(-1, Bufor);
+}
+
 Cell Map::getStart() {
 	for (int i = 1; i <= w; i++) {
 		for (int j = 1; j <= d; j++) {
@@ -167,6 +174,49 @@ std::vector <Cell> Map::getObstacleList() {
 		}
 	}
 	return obstacleCell;
+}
+
+
+void Map::updateBuffer(int _buffSize)
+{
+    for(int x = 1; x <= w; x++)
+    {
+        for(int y = 1; y <= d; y++)
+        {
+            for(int z = 1; z <= h; z++)
+            {
+                if(returnState(x, y, z) == CellState::Bufor)
+                    setEmpty(x, y, z);
+            }
+        }
+    }
+
+    for(int x = 1; x <= w; x++)
+    {
+        for(int y = 1; y <= d; y++)
+        {
+            for(int z = 1; z <= h; z++)
+            {
+                if(returnState(x, y, z) == CellState::Zajeta)
+                    buildUpBuffer(x, y, z, _buffSize);
+            }
+        }
+    }
+}
+
+void Map::buildUpBuffer(int _x, int _y, int _z, int _size)
+{
+    for(int x = qMax(_x - _size, 1); x <= qMin(_x + _size, w); x++)
+    {
+        for(int y = qMax(_y - _size, 1); y <= qMin(_y + _size, d); y++)
+        {
+            for(int z = qMax(_z - _size, 1); z <= qMin(_z + _size, h); z++)
+            {
+                if(returnState(x, y, z) == CellState::Wolna)
+                    setBuffer(x, y, z);
+            }
+        }
+    }
 }
 
 //pomocnicza
