@@ -18,7 +18,7 @@ ui(new Ui::RemoveObstacle)
 
 	for (size_t i = 0; i < obstacleList.size(); i++) {
 		Cell obstacleCell = obstacleList[i];
-		list << ("X: " + QString::number(obstacleCell.cell_x()) + " Y: " + QString::number(obstacleCell.cell_y()));
+		list << ("X: " + QString::number(obstacleCell.cell_x()) + " Y: " + QString::number(obstacleCell.cell_y()) + " Z: " + QString::number(obstacleCell.cell_z()));
 	}
 
 	model->setStringList(list);
@@ -31,7 +31,7 @@ void RemoveObstacle::remove() {
 	for (int i = 0; i < selectedRowsIndexesList.size(); i++) {		
 		QModelIndex q = selectedRowsIndexesList[i];
 		Cell c = obstacleList[q.row()];
-		map->setEmpty(c.cell_x(), c.cell_y());
+		map->setEmpty(c.cell_x(), c.cell_y(), c.cell_z());
 	}
 	QDialog::accept(); // to close the dialog and return 1
 }
