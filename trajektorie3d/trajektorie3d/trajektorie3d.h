@@ -42,6 +42,7 @@ private:
     void StartAlg_Propagacja(Metric metric);
     void przekaz(Cell endCell, int lengthTrace);
     void searchTrace(Cell endCell, int lengthTrace);
+    void rysuj();
     AboutWindow* aboutWindow;
 };
 

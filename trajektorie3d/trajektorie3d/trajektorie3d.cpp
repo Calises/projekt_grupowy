@@ -205,24 +205,28 @@ void Trajektorie3d::Start()
 
     if (ui->comboBox_algorithm->currentIndex() == 0)
     {
-        //StartAlg_Propagacja(metric);
+        StartAlg_Propagacja(metric);
     }     
     else if (ui->comboBox_algorithm->currentIndex() == 1)
     {
         //StartAlg_SztucznePotencjaly(matric);
     }      
-}
+} 
 void Trajektorie3d::przekaz(Cell endCell, int lengthTrace)
 {
-    cout << endl << "wierzcholek koncowy: " << "x " << endCell.cell_x() << " y " << endCell.cell_y() << " z " << endCell.cell_z() << " krok " << lengthTrace;
+    qDebug() << QString("wierzcholek koncowy");
+    QString msg;
+    msg += QString::number(endCell.cell_x()) + QString(" ") + QString::number(endCell.cell_y());
+    qDebug() << msg;
     searchTrace(endCell, lengthTrace);
 }
 void Trajektorie3d::StartAlg_Propagacja(Metric metric)
 {
-
+    ui->label_lengthWay->setText("go");
     if (!map)
         return;
 
+    qDebug() << QString("start");
     //lista z aktualnym czo³em fali 
     list <Cell> listNow;
     //lista z czo³em fali w nastêpnym kroku
@@ -239,8 +243,10 @@ void Trajektorie3d::StartAlg_Propagacja(Metric metric)
     int rr = 1;
     int currentX = map->getStop().cell_x();
     int currentY = map->getStop().cell_y();
-    int currentZ = map->getStop().cell_z();
+    int currentZ = map->getStop().cell_z(); 
 
+    qDebug() << QString("mapa");
+    rysuj();
     while (run)
     {
         while (!listNow.empty())
@@ -255,73 +261,87 @@ void Trajektorie3d::StartAlg_Propagacja(Metric metric)
 
             cout << "aktualny: " << currentX << " " << currentY << " " << currentZ << " ";
             cout << "rr" << rr;
-
+            
             //Polnoc
-            if ((map->returnState(currentX, currentY - 1, currentZ) == Wolna) ||
-                (map->returnState(currentX, currentY - 1, currentZ) == CellState::Start))
+            if ((map->returnValue(currentX, currentY - 1, currentZ) == 100) ||
+                (map->returnValue(currentX, currentY - 1, currentZ) == 101))
             {
-                if (map->returnState(currentX, currentY - 1, currentZ) == CellState::Start)
+                if (map->returnValue(currentX, currentY - 1, currentZ) == 101)
                 {
+                    Cell stopCell = map->getCell(currentX, currentY - 1, currentZ);
                     run = 0;
                     listNext.clear();
                     listNow.clear();
-                    przekaz(currentCell, lengthTrace);
+                    przekaz(stopCell, lengthTrace);
+                    //qDebug() << QString("koniec");
                 }
                 potentialCell = map->getCell(currentX, currentY - 1, currentZ);
+                map->setValue(currentX, currentY - 1, currentZ, lengthTrace);
                 potentialCell.change_cell(lengthTrace, Wolna);
                 listNext.push_back(potentialCell);
                 //currentCell.change_cell(lengthTrace, Wolna);
             }
             //Poludnie
-            if ((map->returnState(currentX, currentY + 1, currentZ) == Wolna) ||
-                (map->returnState(currentX, currentY + 1, currentZ) == CellState::Start))
+            if ((map->returnValue(currentX, currentY + 1, currentZ) == 100) ||
+                (map->returnValue(currentX, currentY + 1, currentZ) == 101))
             {
-                if (map->returnState(currentX, currentY + 1, currentZ) == CellState::Start)
+                if (map->returnValue(currentX, currentY + 1, currentZ) == 101)
                 {
+                    Cell stopCell = map->getCell(currentX, currentY + 1, currentZ);
+                    //qDebug() << QString("koniec2");
                     run = 0;
                     listNext.clear();
                     listNow.clear();
-                    przekaz(currentCell, lengthTrace);
+                    przekaz(stopCell, lengthTrace);
+                    
                 }
                 potentialCell = map->getCell(currentX, currentY + 1, currentZ);
+                map->setValue(currentX, currentY + 1, currentZ, lengthTrace);
                 potentialCell.change_cell(lengthTrace, Wolna);
                 listNext.push_back(potentialCell);
                 //currentCell.change_cell(lengthTrace, Wolna);
             }
             //Wschod
-            if ((map->returnState(currentX + 1, currentY, currentZ) == Wolna) ||
-                (map->returnState(currentX + 1, currentY, currentZ) == CellState::Start))
+            if ((map->returnValue(currentX + 1, currentY, currentZ) == 100) ||
+                (map->returnValue(currentX + 1, currentY, currentZ) == 101))
             {
-                if (map->returnState(currentX + 1, currentY, currentZ) == CellState::Start)
+                if (map->returnValue(currentX + 1, currentY, currentZ) == 101)
                 {
+                    Cell stopCell = map->getCell(currentX + 1, currentY, currentZ);
                     run = 0;
                     listNext.clear();
                     listNow.clear();
-                    przekaz(currentCell, lengthTrace);
+                    przekaz(stopCell, lengthTrace);
+                    //qDebug() << QString("koniec3");
                 }
                 potentialCell = map->getCell(currentX + 1, currentY, currentZ);
+                map->setValue(currentX + 1, currentY, currentZ, lengthTrace);
                 potentialCell.change_cell(lengthTrace, Wolna);
                 listNext.push_back(potentialCell);
                 //currentCell.change_cell(lengthTrace, Wolna);
             }
             //Zachod
-            if ((map->returnState(currentX - 1, currentY, currentZ) == Wolna) ||
-                (map->returnState(currentX - 1, currentY, currentZ) == CellState::Start))
+            if ((map->returnValue(currentX - 1, currentY, currentZ) == 100) ||
+                (map->returnValue(currentX - 1, currentY, currentZ) == 101))
             {
-                if (map->returnState(currentX - 1, currentY, currentZ) == CellState::Start)
+                if (map->returnValue(currentX - 1, currentY, currentZ) == 101)
                 {
+                    Cell stopCell = map->getCell(currentX -1, currentY, currentZ);
                     run = 0;
                     listNext.clear();
                     listNow.clear();
-                    przekaz(currentCell, lengthTrace);
+                    przekaz(stopCell, lengthTrace);
+                    //qDebug() << QString("koniec4");
                 }
                 potentialCell = map->getCell(currentX - 1, currentY, currentZ);
+                map->setValue(currentX - 1, currentY, currentZ, lengthTrace);
                 potentialCell.change_cell(lengthTrace, Wolna);
                 listNext.push_back(potentialCell);
                 //currentCell.change_cell(lengthTrace, Wolna);
             }
             currentCell.change_cell(lengthTrace, Wolna);
         }
+        lengthTrace++;
 
         //przepisanie "czola fali" po zakoñczeniu iteracji
         while (!listNext.empty())
@@ -330,10 +350,13 @@ void Trajektorie3d::StartAlg_Propagacja(Metric metric)
             listNow.push_front(buf);
             listNext.pop_back();
         }
+        //lengthTrace++;
+        system("pause");
+        rysuj();
     }
+    qDebug() << QString("koniec petli");
 
-
-    map->show();
+    //map->show();
 
     //tymczasowe wywo³anie, domyœlnie zamiast map wrzuciæ wynik algorytmu
     //ogreWidget->redrawScene(map);
@@ -385,4 +408,27 @@ void Trajektorie3d::searchTrace(Cell endCell, int lengthTrace)
 
     }
 
+}
+
+void Trajektorie3d::rysuj()
+{
+    qDebug() << endl;
+    Cell currentCell;
+    QString msg;
+
+
+    for (int i = 0; i < map->getDepth(); i++)
+    {
+        for (int j = 0; j < map->getWidth(); j++)
+        {
+            currentCell = map->getCell(j,i,1);
+            if (currentCell.cell_value() == -1)
+                msg += QString("| x |"); 
+            else 
+                msg += QString(" ") + QString::number(currentCell.cell_value()) + QString(" ");
+        }
+        
+        qDebug() << msg;
+        msg = "";
+    }
 }

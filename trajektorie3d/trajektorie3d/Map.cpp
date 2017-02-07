@@ -180,5 +180,5 @@ int Map::returnValue(int x, int y, int z)
 }
 CellState Map::returnState(int x, int y, int z)
 {
-    return map3D[x][y][z].cell_state();
+     return map3D[x][y][z].cell_state();
 }
