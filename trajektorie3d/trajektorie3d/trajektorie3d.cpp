@@ -29,7 +29,10 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
     connect(ui->newMapButton, &QPushButton::clicked,
             this, &Trajektorie3d::newMap);
     connect(ui->clearMapButton, &QPushButton::clicked,
-            this, &Trajektorie3d::clearMap);
+            [=](){
+        clearMap();
+        ogreWidget->redrawScene(map);
+    });
 
     connect(ui->actionClose, &QAction::triggered,
             this, &QMainWindow::close);
@@ -40,7 +43,10 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
     connect(ui->actionNewMap, &QAction::triggered,
             this, &Trajektorie3d::newMap);
     connect(ui->actionClearMap, &QAction::triggered,
-            this, &Trajektorie3d::clearMap);
+            [=](){
+        clearMap();
+        ogreWidget->redrawScene(map);
+    });
 
     connect(ui->actionAbout, &QAction::triggered,
             [=]() { aboutWindow->show(); });
@@ -68,16 +74,6 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
 	ogreWidget->setFixedHeight(480);
 
 	ui->centralLayout->addWidget(ogreWidget, 0, 0, 1, 1);
-
-    // tworzenie przykladowej mapy
-    map = new Map(10, 10, 10);
-    map->setStart(1, 1, 1);
-    map->setStop(9, 9, 1);
-    map->setObstacle(1, 0, 1);
-    map->setObstacle(5, 2, 1);
-    map->setObstacle(5, 3, 1);
-    map->setObstacle(5, 4, 1);
-    map->setObstacle(5, 5, 1);
 
     aboutWindow = new AboutWindow(this);
     newDimensionsDialog = new DimensionsDialog(this);
@@ -218,8 +214,8 @@ void Trajektorie3d::newMap()
 void Trajektorie3d::clearMap()
 {
     int width = map->getWidth();
-    int depth = map->getWidth();
-    int height = map->getWidth();
+    int depth = map->getDepth();
+    int height = map->getHeight();
 
     for(int w = 1; w <= width; w++)
     {
@@ -227,12 +223,17 @@ void Trajektorie3d::clearMap()
         {
             for(int h = 1; h <= height; h++)
             {
-                if(map->returnState(w, d, h) == CellState::Droga)
-                    map->setEmpty(w,d,h);
+                if(map->returnState(w, d, h) == CellState::Wolna)
+                {
+                    map->setEmpty(w, d, h);
+                }
+                else if(map->returnState(w, d, h) == CellState::Droga)
+                {
+                    map->setEmpty(w, d, h);
+                }
             }
         }
     }
-    ogreWidget->redrawScene(map);
 }
 
 void Trajektorie3d::Start()
@@ -244,7 +245,6 @@ void Trajektorie3d::Start()
         metric = Czebyszew;
     else
         QMessageBox::warning(this,"Uwaga", "Zanacz matryke!");
-
 
     if (ui->comboBox_algorithm->currentIndex() == 0)
     {
@@ -401,7 +401,7 @@ void Trajektorie3d::propagacjaFaliManhattan()
             listNext.pop_back();
         }
         //lengthTrace++;
-        system("pause");
+        //system("pause");
         rysuj();
     }
     qDebug() << QString("koniec petli");
@@ -666,7 +666,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
             listNext.pop_back();
         }
         //lengthTrace++;
-        system("pause");
+        //system("pause");
         rysuj();
     }
     qDebug() << QString("koniec petli");

@@ -363,18 +363,8 @@
            </rect>
           </property>
           <property name="currentText">
-           <string>Propagacji fali</string>
+           <string/>
           </property>
-          <item>
-           <property name="text">
-            <string>Propagacji fali</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Sztucznych pól potencjałowych</string>
-           </property>
-          </item>
          </widget>
         </widget>
        </item>
