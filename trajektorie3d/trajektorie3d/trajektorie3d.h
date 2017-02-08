@@ -44,7 +44,7 @@ private:
     void searchTrace(Cell endCell, int lengthTrace);
     void searchTraceCzebyszew(Cell endCell, int lengthTrace);
     void algorithmAddCell(list<Cell> &listNext, Cell cell, int lengthTrace);
-    int algorithmFindEnd(list<Cell> &listNow, list<Cell> &listNext, Cell cell, int lengthTrace);
+    int algorithmFindEnd(list<Cell> &listNow, list<Cell> &listNext, Cell cell, int lengthTrace, Metric metric);
     void rysuj();
     AboutWindow* aboutWindow;
     DimensionsDialog* newDimensionsDialog;

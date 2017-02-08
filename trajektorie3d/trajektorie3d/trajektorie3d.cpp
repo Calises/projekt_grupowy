@@ -279,11 +279,14 @@ void Trajektorie3d::algorithmAddCell(list<Cell> &listNext, Cell cell, int length
     cell.change_cell(lengthTrace, Wolna);
     listNext.push_back(cell);
 }
-int Trajektorie3d::algorithmFindEnd(list<Cell> &listNow, list<Cell> &listNext, Cell cell, int lengthTrace)
+int Trajektorie3d::algorithmFindEnd(list<Cell> &listNow, list<Cell> &listNext, Cell cell, int lengthTrace, Metric metric)
 {
     listNext.clear();
     listNow.clear();
-    przekaz(Manhattan, cell, lengthTrace);
+    if (metric == Manhattan)
+        przekaz(Manhattan, cell, lengthTrace);
+    else
+        przekaz(Czebyszew, cell, lengthTrace);
     return 0;
 }
 void Trajektorie3d::propagacjaFaliManhattan()
@@ -336,7 +339,7 @@ void Trajektorie3d::propagacjaFaliManhattan()
                 potentialCell = map->getCell(currentX, currentY - 1, currentZ);
                 //czy koniec?
                 if (potentialCell.cell_value() == 101)
-                    run = algorithmFindEnd(listNow,listNext,potentialCell,lengthTrace);               
+                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Manhattan);
                 else
                     algorithmAddCell(listNext, potentialCell, lengthTrace);   
             }
@@ -346,7 +349,7 @@ void Trajektorie3d::propagacjaFaliManhattan()
             {
                 potentialCell = map->getCell(currentX, currentY + 1, currentZ);
                 if (potentialCell.cell_value() == 101)
-                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace);    
+                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Manhattan);
                 else
                     algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
@@ -356,7 +359,7 @@ void Trajektorie3d::propagacjaFaliManhattan()
             {
                 potentialCell = map->getCell(currentX + 1, currentY, currentZ);
                 if (potentialCell.cell_value() == 101)
-                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace);
+                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Manhattan);
                 else
                     algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
@@ -366,7 +369,7 @@ void Trajektorie3d::propagacjaFaliManhattan()
             {
                 potentialCell = map->getCell(currentX - 1, currentY, currentZ);
                 if (potentialCell.cell_value() == 101)
-                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace);
+                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Manhattan);
                 else
                     algorithmAddCell(listNext, potentialCell, lengthTrace);      
             }
@@ -377,7 +380,7 @@ void Trajektorie3d::propagacjaFaliManhattan()
                 potentialCell = map->getCell(currentX, currentY, currentZ - 1);
                 
                 if (potentialCell.cell_value() == 101)
-                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace);
+                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Manhattan);
                 else
                     algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
@@ -387,7 +390,7 @@ void Trajektorie3d::propagacjaFaliManhattan()
             {
                 potentialCell = map->getCell(currentX, currentY, currentZ + 1);
                 if (potentialCell.cell_value() == 101)
-                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace);
+                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Manhattan);
                 else
                     algorithmAddCell(listNext, potentialCell, lengthTrace); 
             }
@@ -412,9 +415,8 @@ void Trajektorie3d::propagacjaFaliManhattan()
 void Trajektorie3d::searchTrace(Cell endCell, int lengthTrace)
 {
     Cell cellTrace;
-    
-    //endCell.change_cell(101, Start);
     list <Cell> trace;
+
     trace.push_back(endCell);
     int x = endCell.cell_x();
     int y = endCell.cell_y();
@@ -482,7 +484,6 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
 
     map->updateBuffer(ui->spinBox_przeszkoda->value());
 
-    qDebug() << QString("start");
     //lista z aktualnym czo³em fali 
     list <Cell> listNow;
     //lista z czo³em fali w nastêpnym kroku
@@ -497,7 +498,6 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
 
     bool run = 1;
     int lengthTrace = 1;
-    int rr = 1;
     int currentX = map->getStop().cell_x();
     int currentY = map->getStop().cell_y();
     int currentZ = map->getStop().cell_z();
@@ -507,18 +507,13 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
     int startZ = map->getStart().cell_z();
 
     double euklides = sqrt(pow(currentX - startX, 2) + pow(currentY - startY, 2) + pow(currentZ - startZ, 2));
-    //euklides *= 100;
-    //euklides = round(euklides);
-    //euklides = euklides / 100;
     ui->label_lengthEuclides->setText(QString::number(euklides, 'g', 3));
 
-    qDebug() << QString("mapa");
     rysuj();
     while (run)
     {
         while (!listNow.empty())
         {
-            cout << "list now" << endl;
             currentCell = listNow.back();
             listNow.pop_back();
 
@@ -526,538 +521,273 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
             currentY = currentCell.cell_y();
             currentZ = currentCell.cell_z();
 
-            cout << "aktualny: " << currentX << " " << currentY << " " << currentZ << " ";
-            cout << "rr" << rr;
-
             //lewy gorny skos
             if ((map->returnValue(currentX - 1, currentY - 1, currentZ) == 100) ||
                 (map->returnValue(currentX - 1, currentY - 1, currentZ) == 101))
             {
-                if (map->returnValue(currentX - 1, currentY - 1, currentZ) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX - 1, currentY - 1, currentZ);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
                 potentialCell = map->getCell(currentX - 1, currentY - 1, currentZ);
-                map->setValue(currentX - 1, currentY - 1, currentZ, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //lewy gorny skos nad
             if ((map->returnValue(currentX - 1, currentY - 1, currentZ - 1) == 100) ||
                 (map->returnValue(currentX - 1, currentY - 1, currentZ - 1) == 101))
             {
-                if (map->returnValue(currentX - 1, currentY - 1, currentZ - 1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX - 1, currentY - 1, currentZ - 1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
                 potentialCell = map->getCell(currentX - 1, currentY - 1, currentZ - 1);
-                map->setValue(currentX - 1, currentY - 1, currentZ - 1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);               
             }
             //lewy gorny skos pod
             if ((map->returnValue(currentX - 1, currentY - 1, currentZ + 1) == 100) ||
                 (map->returnValue(currentX - 1, currentY - 1, currentZ + 1) == 101))
             {
-                if (map->returnValue(currentX - 1, currentY - 1, currentZ + 1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX - 1, currentY - 1, currentZ + 1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
                 potentialCell = map->getCell(currentX - 1, currentY - 1, currentZ + 1);
-                map->setValue(currentX - 1, currentY - 1, currentZ + 1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //--------------------------------------------------------------------------------
             //prawy gorny skos
             if ((map->returnValue(currentX + 1, currentY - 1, currentZ) == 100) ||
                 (map->returnValue(currentX + 1, currentY - 1, currentZ) == 101))
             {
-                if (map->returnValue(currentX + 1, currentY - 1, currentZ) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX + 1, currentY - 1, currentZ);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
                 potentialCell = map->getCell(currentX + 1, currentY - 1, currentZ);
-                map->setValue(currentX + 1, currentY - 1, currentZ, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //prawy gorny skos nad
             if ((map->returnValue(currentX + 1, currentY - 1, currentZ - 1) == 100) ||
                 (map->returnValue(currentX + 1, currentY - 1, currentZ - 1) == 101))
             {
-                if (map->returnValue(currentX + 1, currentY - 1, currentZ - 1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX + 1, currentY - 1, currentZ - 1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
                 potentialCell = map->getCell(currentX + 1, currentY - 1, currentZ - 1);
-                map->setValue(currentX + 1, currentY - 1, currentZ - 1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //prawy gorny skos pod
             if ((map->returnValue(currentX + 1, currentY - 1, currentZ + 1) == 100) ||
                 (map->returnValue(currentX + 1, currentY - 1, currentZ + 1) == 101))
             {
-                if (map->returnValue(currentX + 1, currentY - 1, currentZ + 1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX + 1, currentY - 1, currentZ + 1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
                 potentialCell = map->getCell(currentX + 1, currentY - 1, currentZ + 1);
-                map->setValue(currentX + 1, currentY - 1, currentZ + 1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //-----------------------------------------------------------------------------------
             //prawy dolny skok 
             if ((map->returnValue(currentX - 1, currentY + 1, currentZ) == 100) ||
                 (map->returnValue(currentX - 1, currentY + 1, currentZ) == 101))
             {
-                if (map->returnValue(currentX - 1, currentY + 1, currentZ) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX - 1, currentY + 1, currentZ);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
                 potentialCell = map->getCell(currentX - 1, currentY + 1, currentZ);
-                map->setValue(currentX - 1, currentY + 1, currentZ, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //prawy dolny skok nad
             if ((map->returnValue(currentX - 1, currentY + 1, currentZ - 1) == 100) ||
                 (map->returnValue(currentX - 1, currentY + 1, currentZ - 1) == 101))
             {
-                if (map->returnValue(currentX - 1, currentY + 1, currentZ - 1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX - 1, currentY + 1, currentZ - 1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
                 potentialCell = map->getCell(currentX - 1, currentY + 1, currentZ - 1);
-                map->setValue(currentX - 1, currentY + 1, currentZ - 1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //prawy dolny skok pod
             if ((map->returnValue(currentX - 1, currentY + 1, currentZ + 1) == 100) ||
                 (map->returnValue(currentX - 1, currentY + 1, currentZ + 1) == 101))
             {
-                if (map->returnValue(currentX - 1, currentY + 1, currentZ + 1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX - 1, currentY + 1, currentZ + 1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
                 potentialCell = map->getCell(currentX - 1, currentY + 1, currentZ + 1);
-                map->setValue(currentX - 1, currentY + 1, currentZ + 1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //------------------------------------------------------------------------------
             //lewy dolny skok
             if ((map->returnValue(currentX + 1, currentY + 1, currentZ) == 100) ||
                 (map->returnValue(currentX + 1, currentY + 1, currentZ) == 101))
             {
-                if (map->returnValue(currentX + 1, currentY + 1, currentZ) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX + 1, currentY + 1, currentZ);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
                 potentialCell = map->getCell(currentX + 1, currentY + 1, currentZ);
-                map->setValue(currentX + 1, currentY + 1, currentZ, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //lewy dolny skok nad 
             if ((map->returnValue(currentX + 1, currentY + 1, currentZ - 1) == 100) ||
                 (map->returnValue(currentX + 1, currentY + 1, currentZ - 1) == 101))
             {
-                if (map->returnValue(currentX + 1, currentY + 1, currentZ - 1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX + 1, currentY + 1, currentZ - 1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
                 potentialCell = map->getCell(currentX + 1, currentY + 1, currentZ - 1);
-                map->setValue(currentX + 1, currentY + 1, currentZ - 1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //lewy dolny skok pod
             if ((map->returnValue(currentX + 1, currentY + 1, currentZ + 1) == 100) ||
                 (map->returnValue(currentX + 1, currentY + 1, currentZ + 1) == 101))
             {
-                if (map->returnValue(currentX + 1, currentY + 1, currentZ + 1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX + 1, currentY + 1, currentZ + 1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
                 potentialCell = map->getCell(currentX + 1, currentY + 1, currentZ + 1);
-                map->setValue(currentX + 1, currentY + 1, currentZ + 1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //---------------------------------------------------------------------------
             //Polnoc
             if ((map->returnValue(currentX, currentY - 1, currentZ) == 100) ||
                 (map->returnValue(currentX, currentY - 1, currentZ) == 101))
             {
-                if (map->returnValue(currentX, currentY - 1, currentZ) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX, currentY - 1, currentZ);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
                 potentialCell = map->getCell(currentX, currentY - 1, currentZ);
-                map->setValue(currentX, currentY - 1, currentZ, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //Polnoc nad
             if ((map->returnValue(currentX, currentY - 1, currentZ -1) == 100) ||
                 (map->returnValue(currentX, currentY - 1, currentZ -1) == 101))
             {
-                if (map->returnValue(currentX, currentY - 1, currentZ -1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX, currentY - 1, currentZ -1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
-                potentialCell = map->getCell(currentX, currentY - 1, currentZ -1);
-                map->setValue(currentX, currentY - 1, currentZ -1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                potentialCell  = map->getCell(currentX, currentY - 1, currentZ - 1);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //Polnoc pod
             if ((map->returnValue(currentX, currentY - 1, currentZ +1) == 100) ||
                 (map->returnValue(currentX, currentY - 1, currentZ +1) == 101))
             {
-                if (map->returnValue(currentX, currentY - 1, currentZ +1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX, currentY - 1, currentZ +1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec");
-                    break;
-                }
-                potentialCell = map->getCell(currentX, currentY - 1, currentZ +1);
-                map->setValue(currentX, currentY - 1, currentZ +1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                potentialCell = map->getCell(currentX, currentY - 1, currentZ + 1);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //---------------------------------------------------------------------------
             //Poludnie
             if ((map->returnValue(currentX, currentY + 1, currentZ) == 100) ||
                 (map->returnValue(currentX, currentY + 1, currentZ) == 101))
             {
-                if (map->returnValue(currentX, currentY + 1, currentZ) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX, currentY + 1, currentZ);
-                    //qDebug() << QString("koniec2");
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    break;
-                }
                 potentialCell = map->getCell(currentX, currentY + 1, currentZ);
-                map->setValue(currentX, currentY + 1, currentZ, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //Poludnie nad
             if ((map->returnValue(currentX, currentY + 1, currentZ-1) == 100) ||
                 (map->returnValue(currentX, currentY + 1, currentZ-1) == 101))
             {
-                if (map->returnValue(currentX, currentY + 1, currentZ-1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX, currentY + 1, currentZ-1);
-                    //qDebug() << QString("koniec2");
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    break;
-                }
-                potentialCell = map->getCell(currentX, currentY + 1, currentZ-1);
-                map->setValue(currentX, currentY + 1, currentZ-1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                potentialCell = map->getCell(currentX, currentY + 1, currentZ - 1);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //Poludnie pod
             if ((map->returnValue(currentX, currentY + 1, currentZ +1) == 100) ||
                 (map->returnValue(currentX, currentY + 1, currentZ +1) == 101))
             {
-                if (map->returnValue(currentX, currentY + 1, currentZ+1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX, currentY + 1, currentZ+1);
-                    //qDebug() << QString("koniec2");
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    break;
-                }
-                potentialCell = map->getCell(currentX, currentY + 1, currentZ+1);
-                map->setValue(currentX, currentY + 1, currentZ+1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                potentialCell = map->getCell(currentX, currentY + 1, currentZ + 1);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //-----------------------------------------------------------------------
             //Wschod
             if ((map->returnValue(currentX + 1, currentY, currentZ) == 100) ||
                 (map->returnValue(currentX + 1, currentY, currentZ) == 101))
             {
-                if (map->returnValue(currentX + 1, currentY, currentZ) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX + 1, currentY, currentZ);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec3");
-                    break;
-                }
                 potentialCell = map->getCell(currentX + 1, currentY, currentZ);
-                map->setValue(currentX + 1, currentY, currentZ, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //Wschod nad
             if ((map->returnValue(currentX + 1, currentY, currentZ -1) == 100) ||
                 (map->returnValue(currentX + 1, currentY, currentZ -1) == 101))
             {
-                if (map->returnValue(currentX + 1, currentY, currentZ -1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX + 1, currentY, currentZ -1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec3");
-                    break;
-                }
-                potentialCell = map->getCell(currentX + 1, currentY, currentZ -1);
-                map->setValue(currentX + 1, currentY, currentZ -1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                potentialCell = map->getCell(currentX + 1, currentY, currentZ - 1);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //Wschod pod
             if ((map->returnValue(currentX + 1, currentY, currentZ +1) == 100) ||
                 (map->returnValue(currentX + 1, currentY, currentZ +1) == 101))
             {
-                if (map->returnValue(currentX + 1, currentY, currentZ +1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX + 1, currentY, currentZ +1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec3");
-                    break;
-                }
-                potentialCell = map->getCell(currentX + 1, currentY, currentZ+1);
-                map->setValue(currentX + 1, currentY, currentZ+1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                potentialCell = map->getCell(currentX + 1, currentY, currentZ + 1);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //--------------------------------------------------------------------------
             //Zachod
             if ((map->returnValue(currentX - 1, currentY, currentZ) == 100) ||
                 (map->returnValue(currentX - 1, currentY, currentZ) == 101))
             {
-                if (map->returnValue(currentX - 1, currentY, currentZ) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX - 1, currentY, currentZ);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec4");
-                    break;
-                }
                 potentialCell = map->getCell(currentX - 1, currentY, currentZ);
-                map->setValue(currentX - 1, currentY, currentZ, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //Zachod nad
             if ((map->returnValue(currentX - 1, currentY, currentZ-1) == 100) ||
                 (map->returnValue(currentX - 1, currentY, currentZ-1) == 101))
             {
-                if (map->returnValue(currentX - 1, currentY, currentZ-1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX - 1, currentY, currentZ-1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec4");
-                    break;
-                }
-                potentialCell = map->getCell(currentX - 1, currentY, currentZ-1);
-                map->setValue(currentX - 1, currentY, currentZ-1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                potentialCell = map->getCell(currentX - 1, currentY, currentZ - 1);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //Zachod pod
             if ((map->returnValue(currentX - 1, currentY, currentZ+1) == 100) ||
                 (map->returnValue(currentX - 1, currentY, currentZ+1) == 101))
             {
-                if (map->returnValue(currentX - 1, currentY, currentZ+1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX - 1, currentY, currentZ+1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Czebyszew, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec4");
-                    break;
-                }
-                potentialCell = map->getCell(currentX - 1, currentY, currentZ+1);
-                map->setValue(currentX - 1, currentY, currentZ+1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                potentialCell = map->getCell(currentX - 1, currentY, currentZ + 1);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //---------------------------------------------------------------------
             //dol
             if ((map->returnValue(currentX, currentY, currentZ - 1) == 100) ||
                 (map->returnValue(currentX, currentY, currentZ - 1) == 101))
             {
-                if (map->returnValue(currentX, currentY, currentZ - 1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX, currentY, currentZ - 1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Manhattan, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec4");
-                    break;
-                }
                 potentialCell = map->getCell(currentX, currentY, currentZ - 1);
-                //algorithmAddCell(&listNow, &listNext, potentialCell, lengthTrace);
-                map->setValue(currentX, currentY, currentZ - 1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             //gora
             if ((map->returnValue(currentX, currentY, currentZ + 1) == 100) ||
                 (map->returnValue(currentX, currentY, currentZ + 1) == 101))
             {
-                if (map->returnValue(currentX, currentY, currentZ + 1) == 101)
-                {
-                    Cell stopCell = map->getCell(currentX, currentY, currentZ + 1);
-                    run = 0;
-                    listNext.clear();
-                    listNow.clear();
-                    przekaz(Manhattan, stopCell, lengthTrace);
-                    //qDebug() << QString("koniec4");
-                    break;
-                }
                 potentialCell = map->getCell(currentX, currentY, currentZ + 1);
-                //algorithmAddCell(&listNow, &listNext, potentialCell, lengthTrace);
-                map->setValue(currentX, currentY, currentZ + 1, lengthTrace);
-                potentialCell.change_cell(lengthTrace, Wolna);
-                listNext.push_back(potentialCell);
-                //currentCell.change_cell(lengthTrace, Wolna);
+                if (potentialCell.cell_value() == 101)
+                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
+                else
+                    algorithmAddCell(listNext, potentialCell, lengthTrace);
             }
             currentCell.change_cell(lengthTrace, Wolna);
         }
@@ -1074,10 +804,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
         system("pause");
         rysuj();
     }
-    qDebug() << QString("koniec petli");
-
-    //map->show();
-
+   
     //ogreWidget->redrawScene(map);
 }
 
