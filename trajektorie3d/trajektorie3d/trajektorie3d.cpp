@@ -63,11 +63,11 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
 	connect(ui->removeObstacleButton, &QPushButton::clicked,
 		[=]() {removeObstacle();  });
 
-	ogreWidget = new OgreWidget(this);
-	ogreWidget->setFixedWidth(640);
-	ogreWidget->setFixedHeight(480);
+	//ogreWidget = new OgreWidget(this);
+	//ogreWidget->setFixedWidth(640);
+	//ogreWidget->setFixedHeight(480);
 
-	ui->centralLayout->addWidget(ogreWidget, 0, 0, 1, 1);
+	//ui->centralLayout->addWidget(ogreWidget, 0, 0, 1, 1);
 
     // tworzenie przykladowej mapy
     map = new Map(10, 10, 10);
@@ -324,6 +324,7 @@ void Trajektorie3d::propagacjaFaliManhattan()
                     listNow.clear();
                     przekaz(Manhattan, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX, currentY - 1, currentZ);
                 map->setValue(currentX, currentY - 1, currentZ, lengthTrace);
@@ -343,6 +344,7 @@ void Trajektorie3d::propagacjaFaliManhattan()
                     listNext.clear();
                     listNow.clear();
                     przekaz(Manhattan, stopCell, lengthTrace);
+                    break;
                     
                 }
                 potentialCell = map->getCell(currentX, currentY + 1, currentZ);
@@ -358,11 +360,14 @@ void Trajektorie3d::propagacjaFaliManhattan()
                 if (map->returnValue(currentX + 1, currentY, currentZ) == 101)
                 {
                     Cell stopCell = map->getCell(currentX + 1, currentY, currentZ);
+                   
                     run = 0;
                     listNext.clear();
                     listNow.clear();
+                    //stopCell.cell_change(101, Start);
                     przekaz(Manhattan, stopCell, lengthTrace);
                     //qDebug() << QString("koniec3");
+                    break;
                 }
                 potentialCell = map->getCell(currentX + 1, currentY, currentZ);
                 map->setValue(currentX + 1, currentY, currentZ, lengthTrace);
@@ -382,6 +387,7 @@ void Trajektorie3d::propagacjaFaliManhattan()
                     listNow.clear();
                     przekaz(Manhattan, stopCell, lengthTrace);
                     //qDebug() << QString("koniec4");
+                    break;
                 }
                 potentialCell = map->getCell(currentX - 1, currentY, currentZ);
                 map->setValue(currentX - 1, currentY, currentZ, lengthTrace);
@@ -403,23 +409,27 @@ void Trajektorie3d::propagacjaFaliManhattan()
         //lengthTrace++;
         system("pause");
         rysuj();
+        
+        
     }
     qDebug() << QString("koniec petli");
 
     //map->show();
 
-    ogreWidget->redrawScene(map);
+    //ogreWidget->redrawScene(map);
 }
 
 void Trajektorie3d::searchTrace(Cell endCell, int lengthTrace)
 {
     Cell cellTrace;
+    
+    //endCell.change_cell(101, Start);
     list <Cell> trace;
     trace.push_back(endCell);
     int x = endCell.cell_x();
     int y = endCell.cell_y();
     int z = endCell.cell_z();
-
+    map->setStart(x, y, z);
 
     while (lengthTrace > 1)
     {
@@ -456,6 +466,8 @@ void Trajektorie3d::searchTrace(Cell endCell, int lengthTrace)
         lengthTrace--;
 
     }
+    rysuj();
+
 
 }
 
@@ -673,7 +685,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
 
     //map->show();
 
-    ogreWidget->redrawScene(map);
+    //ogreWidget->redrawScene(map);
 }
 
 void Trajektorie3d::searchTraceCzebyszew(Cell endCell, int lengthTrace)
