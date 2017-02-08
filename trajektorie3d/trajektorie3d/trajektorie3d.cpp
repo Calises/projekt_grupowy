@@ -272,7 +272,26 @@ void Trajektorie3d::przekaz(Metric metric, Cell endCell, int lengthTrace)
     if (metric == Czebyszew)
         searchTraceCzebyszew(endCell, lengthTrace);
 }
-
+int Trajektorie3d::countAlgorithm(list<Cell> &listNow, list<Cell> &listNext, Cell cell, int lengthTrace, Metric metric)
+{
+    if (cell.cell_value() == 101)
+    {
+        listNext.clear();
+        listNow.clear();
+        if (metric == Manhattan)
+            przekaz(Manhattan, cell, lengthTrace);
+        else
+            przekaz(Czebyszew, cell, lengthTrace);
+        return 0;
+    } 
+    else
+    {
+        map->setValue(cell.cell_x(), cell.cell_y(), cell.cell_z(), lengthTrace);
+        cell.change_cell(lengthTrace, Wolna);
+        listNext.push_back(cell);
+        return 1;
+    }
+}
 void Trajektorie3d::algorithmAddCell(list<Cell> &listNext, Cell cell, int lengthTrace)
 {
     map->setValue(cell.cell_x(), cell.cell_y(), cell.cell_z(), lengthTrace);
@@ -294,7 +313,6 @@ void Trajektorie3d::propagacjaFaliManhattan()
     if (!map)
         return;
 
-    qDebug() << QString("start");
     //lista z aktualnym czo³em fali 
     list <Cell> listNow;
     //lista z czo³em fali w nastêpnym kroku
@@ -337,62 +355,42 @@ void Trajektorie3d::propagacjaFaliManhattan()
                 (map->returnValue(currentX, currentY - 1, currentZ) == 101))
             {
                 potentialCell = map->getCell(currentX, currentY - 1, currentZ);
-                //czy koniec?
-                if (potentialCell.cell_value() == 101)
-                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Manhattan);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);   
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Manhattan);
             }
             //Poludnie
             if ((map->returnValue(currentX, currentY + 1, currentZ) == 100) ||
                 (map->returnValue(currentX, currentY + 1, currentZ) == 101))
             {
                 potentialCell = map->getCell(currentX, currentY + 1, currentZ);
-                if (potentialCell.cell_value() == 101)
-                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Manhattan);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Manhattan);
             }
             //Wschod
             if ((map->returnValue(currentX + 1, currentY, currentZ) == 100) ||
                 (map->returnValue(currentX + 1, currentY, currentZ) == 101))
             {
                 potentialCell = map->getCell(currentX + 1, currentY, currentZ);
-                if (potentialCell.cell_value() == 101)
-                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Manhattan);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Manhattan);
             }
             //Zachod
             if ((map->returnValue(currentX - 1, currentY, currentZ) == 100) ||
                 (map->returnValue(currentX - 1, currentY, currentZ) == 101))
             {
                 potentialCell = map->getCell(currentX - 1, currentY, currentZ);
-                if (potentialCell.cell_value() == 101)
-                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Manhattan);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);      
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Manhattan);
             }
             //dol
             if ((map->returnValue(currentX, currentY, currentZ - 1) == 100) ||
                 (map->returnValue(currentX, currentY, currentZ - 1) == 101))
             {
                 potentialCell = map->getCell(currentX, currentY, currentZ - 1);
-                
-                if (potentialCell.cell_value() == 101)
-                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Manhattan);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Manhattan);
             }
             //gora
             if ((map->returnValue(currentX, currentY, currentZ + 1) == 100) ||
                 (map->returnValue(currentX, currentY, currentZ + 1) == 101))
             {
                 potentialCell = map->getCell(currentX, currentY, currentZ + 1);
-                if (potentialCell.cell_value() == 101)
-                    run = algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Manhattan);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace); 
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Manhattan);
             }
             currentCell.change_cell(lengthTrace, Wolna);
         }
@@ -405,8 +403,8 @@ void Trajektorie3d::propagacjaFaliManhattan()
             listNow.push_front(buf);
             listNext.pop_back();
         }
-        //system("pause");
-        //rysuj();     
+        system("pause");
+        rysuj();     
     }
     //ogreWidget->redrawScene(map);
 }
