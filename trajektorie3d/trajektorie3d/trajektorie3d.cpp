@@ -239,7 +239,11 @@ void Trajektorie3d::clearMap()
 
 void Trajektorie3d::Start()
 {
+    if(!map)
+        return;
+
     clearMap();
+    map->updateBuffer(ui->spinBox_przeszkoda->value());
 
     Metric metric;
     if (ui->radioButton_Manhattan->isChecked())
@@ -276,9 +280,6 @@ void Trajektorie3d::przekaz(Metric metric, Cell endCell, int lengthTrace)
 
 void Trajektorie3d::propagacjaFaliManhattan()
 {
-    if (!map)
-        return;
-
     qDebug() << QString("start");
     //lista z aktualnym czo³em fali 
     list <Cell> listNow;
@@ -549,11 +550,6 @@ void Trajektorie3d::searchTrace(Cell endCell, int lengthTrace)
 
 void Trajektorie3d::propagacjaFaliCzebyszew()
 {
-    if (!map)
-        return;
-
-    map->updateBuffer(ui->spinBox_przeszkoda->value());
-
     qDebug() << QString("start");
     //lista z aktualnym czo³em fali 
     list <Cell> listNow;
