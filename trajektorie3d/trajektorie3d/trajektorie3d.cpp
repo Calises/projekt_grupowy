@@ -403,8 +403,8 @@ void Trajektorie3d::propagacjaFaliManhattan()
             listNow.push_front(buf);
             listNext.pop_back();
         }
-        system("pause");
-        rysuj();     
+        //system("pause");
+        //rysuj();     
     }
     //ogreWidget->redrawScene(map);
 }
@@ -462,16 +462,12 @@ void Trajektorie3d::searchTrace(Cell endCell, int lengthTrace)
             map->setTrace(x, y, z + 1);
             trace.push_back(cellTrace);
             z++;
-        }
-
-        QString lengthTraceString;
-        //lengthTraceString.setNum(trace.size());
-        ui->label_lengthWay->setText(lengthTraceString.setNum(trace.size()));
+        }     
         lengthTrace--;
-
     }
-    rysuj();
-
+    QString lengthTraceString;
+    ui->label_lengthWay->setText(lengthTraceString.setNum(trace.size()));
+    //rysuj();
 
 }
 
@@ -507,7 +503,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
     double euklides = sqrt(pow(currentX - startX, 2) + pow(currentY - startY, 2) + pow(currentZ - startZ, 2));
     ui->label_lengthEuclides->setText(QString::number(euklides, 'g', 3));
 
-    rysuj();
+    //rysuj();
     while (run)
     {
         while (!listNow.empty())
@@ -720,9 +716,8 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
             listNow.push_front(buf);
             listNext.pop_back();
         }
-        //lengthTrace++;
-        system("pause");
-        rysuj();
+        //system("pause");
+        //rysuj();
     }
    
     //ogreWidget->redrawScene(map);
@@ -737,6 +732,7 @@ void Trajektorie3d::searchTraceCzebyszew(Cell endCell, int lengthTrace)
     int y = endCell.cell_y();
     int z = endCell.cell_z();
     map->setStart(x, y, z);
+    //qDebug() << QString::number(lengthTrace);
 
     while (lengthTrace > 1)
     {
@@ -950,15 +946,14 @@ void Trajektorie3d::searchTraceCzebyszew(Cell endCell, int lengthTrace)
             map->setTrace(x, y, z - 1);
             trace.push_back(cellTrace);
             z--;
-        }
-
-        QString lengthTraceString;
-        //lengthTraceString.setNum(trace.size());
-        ui->label_lengthWay->setText(lengthTraceString.setNum(trace.size()));
+        }   
         lengthTrace--;
-
+        qDebug() << QString::number(lengthTrace);
     }
-
+    qDebug() << QString::number(lengthTrace);
+    QString lengthTraceString;
+    ui->label_lengthWay->setText(lengthTraceString.setNum(trace.size()));   
+    rysuj();
 }
 
 void Trajektorie3d::rysuj()
