@@ -111,11 +111,11 @@ void Map::setObstacle(int x, int y, int z)
 }
 void Map::setStart(int x, int y, int z)
 {
-    map3D[x][y][z].change_cell(1, Start);
+    map3D[x][y][z].change_cell(101, Start);
 }
 void Map::setStop(int x, int y, int z)
 {
-    map3D[x][y][z].change_cell(100, Koniec); //? 100 czy 0
+    map3D[x][y][z].change_cell(0, Koniec); //? 100 czy 0
 }
 
 void Map::setEmpty(int x, int y, int z)
@@ -126,6 +126,14 @@ void Map::setEmpty(int x, int y, int z)
 void Map::setTrace(int x, int y, int z)
 {
     map3D[x][y][z].change_cell(200, Droga);
+}
+void Map::setValue(int x, int y, int z, int value)
+{
+    map3D[x][y][z].change_cell(value, Wolna);
+}
+Cell Map::getCell(int x, int y, int z)
+{
+    return map3D[x][y][z];
 }
 
 void Map::setBuffer(int x, int y, int z)
@@ -226,5 +234,5 @@ int Map::returnValue(int x, int y, int z)
 }
 CellState Map::returnState(int x, int y, int z)
 {
-    return map3D[x][y][z].cell_state();
+     return map3D[x][y][z].cell_state();
 }

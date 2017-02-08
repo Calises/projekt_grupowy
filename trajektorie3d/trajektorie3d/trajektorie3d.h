@@ -12,6 +12,11 @@
 #include "RemoveObstacle.h"
 #include "dimensionsdialog.h"
 
+enum Metric {
+    Manhattan,
+    Czebyszew,
+};
+
 class Trajektorie3d : public QMainWindow
 {
     Q_OBJECT
@@ -21,7 +26,7 @@ public:
     ~Trajektorie3d();
 
 public slots:
-    void startAlgorithm();
+    void Start();
 	void dialogIsFinished(int);
 
 private:
@@ -33,7 +38,12 @@ private:
 
 	void showEditMap(std::string, CellState);
 	void removeObstacle();
-
+    void propagacjaFaliManhattan();
+    void propagacjaFaliCzebyszew();
+    void przekaz(Metric metric, Cell endCell, int lengthTrace);
+    void searchTrace(Cell endCell, int lengthTrace);
+    void searchTraceCzebyszew(Cell endCell, int lengthTrace);
+    void rysuj();
     AboutWindow* aboutWindow;
     DimensionsDialog* newDimensionsDialog;
 
