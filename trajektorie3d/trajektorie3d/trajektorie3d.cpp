@@ -78,6 +78,9 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
     map->setObstacle(5, 3, 1);
     map->setObstacle(5, 4, 1);
     map->setObstacle(5, 5, 1);
+    map->setObstacle(8, 9, 1);
+    map->setObstacle(7, 8, 1);
+
 
     aboutWindow = new AboutWindow(this);
     newDimensionsDialog = new DimensionsDialog(this);
@@ -237,6 +240,8 @@ void Trajektorie3d::clearMap()
 
 void Trajektorie3d::Start()
 {
+    //clearMap();
+
     Metric metric;
     if (ui->radioButton_Manhattan->isChecked())
         metric = Manhattan;
@@ -390,7 +395,50 @@ void Trajektorie3d::propagacjaFaliManhattan()
                     break;
                 }
                 potentialCell = map->getCell(currentX - 1, currentY, currentZ);
+                //algorithmAddCell(&listNow, &listNext, potentialCell, lengthTrace);
                 map->setValue(currentX - 1, currentY, currentZ, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //dol
+            if ((map->returnValue(currentX, currentY, currentZ - 1) == 100) ||
+                (map->returnValue(currentX, currentY, currentZ - 1) == 101))
+            {
+                if (map->returnValue(currentX, currentY, currentZ - 1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX, currentY, currentZ - 1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Manhattan, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec4");
+                    break;
+                }
+                potentialCell = map->getCell(currentX, currentY, currentZ - 1);
+                //algorithmAddCell(&listNow, &listNext, potentialCell, lengthTrace);
+                map->setValue(currentX, currentY, currentZ - 1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //gora
+            if ((map->returnValue(currentX, currentY, currentZ + 1) == 100) ||
+                (map->returnValue(currentX, currentY, currentZ + 1) == 101))
+            {
+                if (map->returnValue(currentX, currentY, currentZ + 1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX, currentY, currentZ + 1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Manhattan, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec4");
+                    break;
+                }
+                potentialCell = map->getCell(currentX, currentY, currentZ + 1);
+                //algorithmAddCell(&listNow, &listNext, potentialCell, lengthTrace);
+                map->setValue(currentX, currentY, currentZ + 1, lengthTrace);
                 potentialCell.change_cell(lengthTrace, Wolna);
                 listNext.push_back(potentialCell);
                 //currentCell.change_cell(lengthTrace, Wolna);
@@ -413,10 +461,16 @@ void Trajektorie3d::propagacjaFaliManhattan()
         
     }
     qDebug() << QString("koniec petli");
-
     //map->show();
 
     //ogreWidget->redrawScene(map);
+}
+list<Cell>* Trajektorie3d::algorithmAddCell(list<Cell> *listNow, list<Cell> *listNext, Cell cell, int lengthTrace)
+{
+    map->setValue(cell.cell_x() - 1, cell.cell_y(), cell.cell_z(), lengthTrace);
+    cell.change_cell(lengthTrace, Wolna);
+ //   *listNext.push_back(cell);
+    return listNext;
 }
 
 void Trajektorie3d::searchTrace(Cell endCell, int lengthTrace)
@@ -458,6 +512,20 @@ void Trajektorie3d::searchTrace(Cell endCell, int lengthTrace)
             map->setTrace(x, y - 1, z);
             trace.push_back(cellTrace);
             y--;
+        }
+        else if (map->returnValue(x, y, z - 1) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x, y, z - 1);
+            map->setTrace(x, y, z - 1);
+            trace.push_back(cellTrace);
+            z--;
+        }
+        else if (map->returnValue(x, y, z + 1) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x, y, z + 1);
+            map->setTrace(x, y, z + 1);
+            trace.push_back(cellTrace);
+            z++;
         }
 
         QString lengthTraceString;
