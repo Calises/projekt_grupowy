@@ -7,6 +7,7 @@
 #include <QFileDialog>
 #include <qmessagebox.h>
 #include <list>
+#include "cmath"
 
 Trajektorie3d::Trajektorie3d(QWidget *parent) :
 	QMainWindow(parent),
@@ -300,6 +301,16 @@ void Trajektorie3d::propagacjaFaliManhattan()
     int currentY = map->getStop().cell_y();
     int currentZ = map->getStop().cell_z(); 
 
+    int startX = map->getStart().cell_x();
+    int startY = map->getStart().cell_y();
+    int startZ = map->getStart().cell_z();
+    
+    double euklides = sqrt(pow(currentX - startX, 2) + pow(currentY - startY, 2) + pow(currentZ - startZ, 2));
+    //euklides *= 100;
+    //euklides = round(euklides);
+    //euklides = euklides / 100;
+    ui->label_lengthEuclides->setText(QString::number(euklides, 'g', 3));
+
     qDebug() << QString("mapa");
     rysuj();
     while (run)
@@ -558,12 +569,23 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
     Cell buf = map->getStop();
     Cell potentialCell = map->getStop();
 
+
     bool run = 1;
     int lengthTrace = 1;
     int rr = 1;
     int currentX = map->getStop().cell_x();
     int currentY = map->getStop().cell_y();
     int currentZ = map->getStop().cell_z();
+
+    int startX = map->getStart().cell_x();
+    int startY = map->getStart().cell_y();
+    int startZ = map->getStart().cell_z();
+
+    double euklides = sqrt(pow(currentX - startX, 2) + pow(currentY - startY, 2) + pow(currentZ - startZ, 2));
+    //euklides *= 100;
+    //euklides = round(euklides);
+    //euklides = euklides / 100;
+    ui->label_lengthEuclides->setText(QString::number(euklides, 'g', 3));
 
     qDebug() << QString("mapa");
     rysuj();
