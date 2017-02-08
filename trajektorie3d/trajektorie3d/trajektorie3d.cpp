@@ -601,6 +601,45 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 listNext.push_back(potentialCell);
                 //currentCell.change_cell(lengthTrace, Wolna);
             }
+            //lewy gorny skos nad
+            if ((map->returnValue(currentX - 1, currentY - 1, currentZ - 1) == 100) ||
+                (map->returnValue(currentX - 1, currentY - 1, currentZ - 1) == 101))
+            {
+                if (map->returnValue(currentX - 1, currentY - 1, currentZ - 1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX - 1, currentY - 1, currentZ - 1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec");
+                }
+                potentialCell = map->getCell(currentX - 1, currentY - 1, currentZ - 1);
+                map->setValue(currentX - 1, currentY - 1, currentZ - 1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //lewy gorny skos pod
+            if ((map->returnValue(currentX - 1, currentY - 1, currentZ + 1) == 100) ||
+                (map->returnValue(currentX - 1, currentY - 1, currentZ + 1) == 101))
+            {
+                if (map->returnValue(currentX - 1, currentY - 1, currentZ + 1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX - 1, currentY - 1, currentZ + 1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec");
+                }
+                potentialCell = map->getCell(currentX - 1, currentY - 1, currentZ + 1);
+                map->setValue(currentX - 1, currentY - 1, currentZ + 1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //--------------------------------------------------------------------------------
             //prawy gorny skos
             if ((map->returnValue(currentX + 1, currentY - 1, currentZ) == 100) ||
                 (map->returnValue(currentX + 1, currentY - 1, currentZ) == 101))
@@ -620,7 +659,46 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 listNext.push_back(potentialCell);
                 //currentCell.change_cell(lengthTrace, Wolna);
             }
-            //prawy dolny skok
+            //prawy gorny skos nad
+            if ((map->returnValue(currentX + 1, currentY - 1, currentZ - 1) == 100) ||
+                (map->returnValue(currentX + 1, currentY - 1, currentZ - 1) == 101))
+            {
+                if (map->returnValue(currentX + 1, currentY - 1, currentZ - 1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX + 1, currentY - 1, currentZ - 1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec");
+                }
+                potentialCell = map->getCell(currentX + 1, currentY - 1, currentZ - 1);
+                map->setValue(currentX + 1, currentY - 1, currentZ - 1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //prawy gorny skos pod
+            if ((map->returnValue(currentX + 1, currentY - 1, currentZ + 1) == 100) ||
+                (map->returnValue(currentX + 1, currentY - 1, currentZ + 1) == 101))
+            {
+                if (map->returnValue(currentX + 1, currentY - 1, currentZ + 1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX + 1, currentY - 1, currentZ + 1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec");
+                }
+                potentialCell = map->getCell(currentX + 1, currentY - 1, currentZ + 1);
+                map->setValue(currentX + 1, currentY - 1, currentZ + 1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //-----------------------------------------------------------------------------------
+            //prawy dolny skok 
             if ((map->returnValue(currentX - 1, currentY + 1, currentZ) == 100) ||
                 (map->returnValue(currentX - 1, currentY + 1, currentZ) == 101))
             {
@@ -639,6 +717,45 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 listNext.push_back(potentialCell);
                 //currentCell.change_cell(lengthTrace, Wolna);
             }
+            //prawy dolny skok nad
+            if ((map->returnValue(currentX - 1, currentY + 1, currentZ - 1) == 100) ||
+                (map->returnValue(currentX - 1, currentY + 1, currentZ - 1) == 101))
+            {
+                if (map->returnValue(currentX - 1, currentY + 1, currentZ - 1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX - 1, currentY + 1, currentZ - 1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec");
+                }
+                potentialCell = map->getCell(currentX - 1, currentY + 1, currentZ - 1);
+                map->setValue(currentX - 1, currentY + 1, currentZ - 1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //prawy dolny skok pod
+            if ((map->returnValue(currentX - 1, currentY + 1, currentZ + 1) == 100) ||
+                (map->returnValue(currentX - 1, currentY + 1, currentZ + 1) == 101))
+            {
+                if (map->returnValue(currentX - 1, currentY + 1, currentZ + 1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX - 1, currentY + 1, currentZ + 1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec");
+                }
+                potentialCell = map->getCell(currentX - 1, currentY + 1, currentZ + 1);
+                map->setValue(currentX - 1, currentY + 1, currentZ + 1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //------------------------------------------------------------------------------
             //lewy dolny skok
             if ((map->returnValue(currentX + 1, currentY + 1, currentZ) == 100) ||
                 (map->returnValue(currentX + 1, currentY + 1, currentZ) == 101))
@@ -658,6 +775,45 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 listNext.push_back(potentialCell);
                 //currentCell.change_cell(lengthTrace, Wolna);
             }
+            //lewy dolny skok nad 
+            if ((map->returnValue(currentX + 1, currentY + 1, currentZ - 1) == 100) ||
+                (map->returnValue(currentX + 1, currentY + 1, currentZ - 1) == 101))
+            {
+                if (map->returnValue(currentX + 1, currentY + 1, currentZ - 1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX + 1, currentY + 1, currentZ - 1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec");
+                }
+                potentialCell = map->getCell(currentX + 1, currentY + 1, currentZ - 1);
+                map->setValue(currentX + 1, currentY + 1, currentZ - 1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //lewy dolny skok pod
+            if ((map->returnValue(currentX + 1, currentY + 1, currentZ + 1) == 100) ||
+                (map->returnValue(currentX + 1, currentY + 1, currentZ + 1) == 101))
+            {
+                if (map->returnValue(currentX + 1, currentY + 1, currentZ + 1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX + 1, currentY + 1, currentZ + 1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec");
+                }
+                potentialCell = map->getCell(currentX + 1, currentY + 1, currentZ + 1);
+                map->setValue(currentX + 1, currentY + 1, currentZ + 1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //---------------------------------------------------------------------------
             //Polnoc
             if ((map->returnValue(currentX, currentY - 1, currentZ) == 100) ||
                 (map->returnValue(currentX, currentY - 1, currentZ) == 101))
@@ -677,6 +833,45 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 listNext.push_back(potentialCell);
                 //currentCell.change_cell(lengthTrace, Wolna);
             }
+            //Polnoc nad
+            if ((map->returnValue(currentX, currentY - 1, currentZ -1) == 100) ||
+                (map->returnValue(currentX, currentY - 1, currentZ -1) == 101))
+            {
+                if (map->returnValue(currentX, currentY - 1, currentZ -1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX, currentY - 1, currentZ -1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec");
+                }
+                potentialCell = map->getCell(currentX, currentY - 1, currentZ -1);
+                map->setValue(currentX, currentY - 1, currentZ -1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //Polnoc pod
+            if ((map->returnValue(currentX, currentY - 1, currentZ +1) == 100) ||
+                (map->returnValue(currentX, currentY - 1, currentZ +1) == 101))
+            {
+                if (map->returnValue(currentX, currentY - 1, currentZ +1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX, currentY - 1, currentZ +1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec");
+                }
+                potentialCell = map->getCell(currentX, currentY - 1, currentZ +1);
+                map->setValue(currentX, currentY - 1, currentZ +1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //---------------------------------------------------------------------------
             //Poludnie
             if ((map->returnValue(currentX, currentY + 1, currentZ) == 100) ||
                 (map->returnValue(currentX, currentY + 1, currentZ) == 101))
@@ -696,6 +891,45 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 listNext.push_back(potentialCell);
                 //currentCell.change_cell(lengthTrace, Wolna);
             }
+            //Poludnie nad
+            if ((map->returnValue(currentX, currentY + 1, currentZ-1) == 100) ||
+                (map->returnValue(currentX, currentY + 1, currentZ-1) == 101))
+            {
+                if (map->returnValue(currentX, currentY + 1, currentZ-1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX, currentY + 1, currentZ-1);
+                    //qDebug() << QString("koniec2");
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                }
+                potentialCell = map->getCell(currentX, currentY + 1, currentZ-1);
+                map->setValue(currentX, currentY + 1, currentZ-1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //Poludnie pod
+            if ((map->returnValue(currentX, currentY + 1, currentZ +1) == 100) ||
+                (map->returnValue(currentX, currentY + 1, currentZ +1) == 101))
+            {
+                if (map->returnValue(currentX, currentY + 1, currentZ+1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX, currentY + 1, currentZ+1);
+                    //qDebug() << QString("koniec2");
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                }
+                potentialCell = map->getCell(currentX, currentY + 1, currentZ+1);
+                map->setValue(currentX, currentY + 1, currentZ+1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //-----------------------------------------------------------------------
             //Wschod
             if ((map->returnValue(currentX + 1, currentY, currentZ) == 100) ||
                 (map->returnValue(currentX + 1, currentY, currentZ) == 101))
@@ -715,6 +949,45 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 listNext.push_back(potentialCell);
                 //currentCell.change_cell(lengthTrace, Wolna);
             }
+            //Wschod nad
+            if ((map->returnValue(currentX + 1, currentY, currentZ -1) == 100) ||
+                (map->returnValue(currentX + 1, currentY, currentZ -1) == 101))
+            {
+                if (map->returnValue(currentX + 1, currentY, currentZ -1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX + 1, currentY, currentZ -1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec3");
+                }
+                potentialCell = map->getCell(currentX + 1, currentY, currentZ -1);
+                map->setValue(currentX + 1, currentY, currentZ -1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //Wschod pod
+            if ((map->returnValue(currentX + 1, currentY, currentZ +1) == 100) ||
+                (map->returnValue(currentX + 1, currentY, currentZ +1) == 101))
+            {
+                if (map->returnValue(currentX + 1, currentY, currentZ +1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX + 1, currentY, currentZ +1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec3");
+                }
+                potentialCell = map->getCell(currentX + 1, currentY, currentZ+1);
+                map->setValue(currentX + 1, currentY, currentZ+1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //--------------------------------------------------------------------------
             //Zachod
             if ((map->returnValue(currentX - 1, currentY, currentZ) == 100) ||
                 (map->returnValue(currentX - 1, currentY, currentZ) == 101))
@@ -730,6 +1003,87 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 }
                 potentialCell = map->getCell(currentX - 1, currentY, currentZ);
                 map->setValue(currentX - 1, currentY, currentZ, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //Zachod nad
+            if ((map->returnValue(currentX - 1, currentY, currentZ-1) == 100) ||
+                (map->returnValue(currentX - 1, currentY, currentZ-1) == 101))
+            {
+                if (map->returnValue(currentX - 1, currentY, currentZ-1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX - 1, currentY, currentZ-1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec4");
+                }
+                potentialCell = map->getCell(currentX - 1, currentY, currentZ-1);
+                map->setValue(currentX - 1, currentY, currentZ-1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //Zachod pod
+            if ((map->returnValue(currentX - 1, currentY, currentZ+1) == 100) ||
+                (map->returnValue(currentX - 1, currentY, currentZ+1) == 101))
+            {
+                if (map->returnValue(currentX - 1, currentY, currentZ+1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX - 1, currentY, currentZ+1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Czebyszew, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec4");
+                }
+                potentialCell = map->getCell(currentX - 1, currentY, currentZ+1);
+                map->setValue(currentX - 1, currentY, currentZ+1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //---------------------------------------------------------------------
+            //dol
+            if ((map->returnValue(currentX, currentY, currentZ - 1) == 100) ||
+                (map->returnValue(currentX, currentY, currentZ - 1) == 101))
+            {
+                if (map->returnValue(currentX, currentY, currentZ - 1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX, currentY, currentZ - 1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Manhattan, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec4");
+                    break;
+                }
+                potentialCell = map->getCell(currentX, currentY, currentZ - 1);
+                //algorithmAddCell(&listNow, &listNext, potentialCell, lengthTrace);
+                map->setValue(currentX, currentY, currentZ - 1, lengthTrace);
+                potentialCell.change_cell(lengthTrace, Wolna);
+                listNext.push_back(potentialCell);
+                //currentCell.change_cell(lengthTrace, Wolna);
+            }
+            //gora
+            if ((map->returnValue(currentX, currentY, currentZ + 1) == 100) ||
+                (map->returnValue(currentX, currentY, currentZ + 1) == 101))
+            {
+                if (map->returnValue(currentX, currentY, currentZ + 1) == 101)
+                {
+                    Cell stopCell = map->getCell(currentX, currentY, currentZ + 1);
+                    run = 0;
+                    listNext.clear();
+                    listNow.clear();
+                    przekaz(Manhattan, stopCell, lengthTrace);
+                    //qDebug() << QString("koniec4");
+                    break;
+                }
+                potentialCell = map->getCell(currentX, currentY, currentZ + 1);
+                //algorithmAddCell(&listNow, &listNext, potentialCell, lengthTrace);
+                map->setValue(currentX, currentY, currentZ + 1, lengthTrace);
                 potentialCell.change_cell(lengthTrace, Wolna);
                 listNext.push_back(potentialCell);
                 //currentCell.change_cell(lengthTrace, Wolna);
@@ -768,13 +1122,42 @@ void Trajektorie3d::searchTraceCzebyszew(Cell endCell, int lengthTrace)
 
     while (lengthTrace > 1)
     {
-        if (map->returnValue(x - 1, y - 1, z) == lengthTrace - 1)
+        if (map->returnValue(x - 1, y - 1, z-1) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x - 1, y - 1, z - 1);
+            map->setTrace(x - 1, y - 1, z - 1);
+            trace.push_back(cellTrace);
+            x--;
+            y--;
+            z--;
+        }
+        else if (map->returnValue(x - 1, y - 1, z) == lengthTrace - 1)
         {
             cellTrace = map->getCell(x - 1, y - 1, z);
             map->setTrace(x - 1, y - 1, z);
             trace.push_back(cellTrace);
             x--;
             y--;
+        }
+        else if (map->returnValue(x - 1, y - 1, z + 1) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x - 1, y - 1, z + 1);
+            map->setTrace(x - 1, y - 1, z + 1);
+            trace.push_back(cellTrace);
+            x--;
+            y--;
+            z--;
+            z++;
+        }
+        //-------------------------------------------------------------------
+        else if (map->returnValue(x - 1, y + 1, z-1) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x - 1, y + 1, z - 1);
+            map->setTrace(x - 1, y + 1, z - 1);
+            trace.push_back(cellTrace);
+            x--;
+            y++;
+            z--;
         }
         else if (map->returnValue(x - 1, y + 1, z) == lengthTrace - 1)
         {
@@ -784,6 +1167,25 @@ void Trajektorie3d::searchTraceCzebyszew(Cell endCell, int lengthTrace)
             x--;
             y++;
         }
+        else if (map->returnValue(x - 1, y + 1, z + 1) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x - 1, y + 1, z + 1);
+            map->setTrace(x - 1, y + 1, z + 1);
+            trace.push_back(cellTrace);
+            x--;
+            y++;
+            z++;
+        }
+        //--------------------------------------------------------------------
+        else if (map->returnValue(x + 1, y - 1, z -1 ) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x + 1, y - 1, z -1);
+            map->setTrace(x + 1, y - 1, z-1);
+            trace.push_back(cellTrace);
+            x++;
+            y--;
+            z--;
+        }
         else if (map->returnValue(x + 1, y - 1, z) == lengthTrace - 1)
         {
             cellTrace = map->getCell(x + 1, y - 1, z);
@@ -791,7 +1193,26 @@ void Trajektorie3d::searchTraceCzebyszew(Cell endCell, int lengthTrace)
             trace.push_back(cellTrace);
             x++;
             y--;
-        }     
+        }
+        else if (map->returnValue(x + 1, y - 1, z+1) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x + 1, y - 1, z+1);
+            map->setTrace(x + 1, y - 1, z+1);
+            trace.push_back(cellTrace);
+            x++;
+            y--;
+            z++;
+        }
+        //---------------------------------------------------------------------
+        else if (map->returnValue(x + 1, y + 1, z-1) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x + 1, y + 1, z-1);
+            map->setTrace(x + 1, y + 1, z-1);
+            trace.push_back(cellTrace);
+            x++;
+            y++;
+            z--;
+        }
         else if (map->returnValue(x + 1, y + 1, z) == lengthTrace - 1)
         {
             cellTrace = map->getCell(x + 1, y + 1, z);
@@ -800,12 +1221,47 @@ void Trajektorie3d::searchTraceCzebyszew(Cell endCell, int lengthTrace)
             x++;
             y++;
         }
+        else if (map->returnValue(x + 1, y + 1, z+1) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x + 1, y + 1, z+1);
+            map->setTrace(x + 1, y + 1, z+1);
+            trace.push_back(cellTrace);
+            x++;
+            y++;
+            z++;
+        }
+        //--------------------------------------------------------------------
+        else if (map->returnValue(x - 1, y, z-1) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x - 1, y, z-1);
+            map->setTrace(x - 1, y, z-1);
+            trace.push_back(cellTrace);
+            x--;
+            z--;
+        }
         else if (map->returnValue(x - 1, y, z) == lengthTrace - 1)
         {
             cellTrace = map->getCell(x - 1, y, z);
             map->setTrace(x - 1, y, z);
             trace.push_back(cellTrace);
             x--;
+        }
+        else if (map->returnValue(x - 1, y, z+1) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x - 1, y, z+1);
+            map->setTrace(x - 1, y, z+1);
+            trace.push_back(cellTrace);
+            x--;
+            z++;
+        }
+        //----------------------------------------------------------------------
+        else if (map->returnValue(x + 1, y, z-1) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x + 1, y, z-1);
+            map->setTrace(x + 1, y, z-1);
+            trace.push_back(cellTrace);
+            x++;
+            z--;
         }
         else if (map->returnValue(x + 1, y, z) == lengthTrace - 1)
         {
@@ -814,17 +1270,68 @@ void Trajektorie3d::searchTraceCzebyszew(Cell endCell, int lengthTrace)
             trace.push_back(cellTrace);
             x++;
         }
+        else if (map->returnValue(x + 1, y, z+1) == lengthTrace - 1)
+        {
+            cellTrace = map->getCell(x + 1, y, z+1);
+            map->setTrace(x + 1, y, z+1);
+            trace.push_back(cellTrace);
+            x++;
+            z++;
+        }
+        //----------------------------------------------------------------------
+        else if (map->returnValue(x, y + 1, z-1) == lengthTrace - 1) {
+            cellTrace = map->getCell(x, y + 1, z-1);
+            map->setTrace(x, y + 1, z-1);
+            trace.push_back(cellTrace);
+            y++;
+            z--;
+        }
         else if (map->returnValue(x, y + 1, z) == lengthTrace - 1) {
             cellTrace = map->getCell(x, y + 1, z);
             map->setTrace(x, y + 1, z);
             trace.push_back(cellTrace);
             y++;
         }
+        else if (map->returnValue(x, y + 1, z+1) == lengthTrace - 1) {
+            cellTrace = map->getCell(x, y + 1, z+1);
+            map->setTrace(x, y + 1, z+1);
+            trace.push_back(cellTrace);
+            y++;
+            z++;
+        }
+        //----------------------------------------------------------------
+        else if (map->returnValue(x, y - 1, z-1) == lengthTrace - 1) {
+            cellTrace = map->getCell(x, y - 1, z-1);
+            map->setTrace(x, y - 1, z-1);
+            trace.push_back(cellTrace);
+            y--;
+            z--;
+        }
         else if (map->returnValue(x, y - 1, z) == lengthTrace - 1) {
             cellTrace = map->getCell(x, y - 1, z);
             map->setTrace(x, y - 1, z);
             trace.push_back(cellTrace);
             y--;
+        }
+        else if (map->returnValue(x, y - 1, z+1) == lengthTrace - 1) {
+            cellTrace = map->getCell(x, y - 1, z+1);
+            map->setTrace(x, y - 1, z+1);
+            trace.push_back(cellTrace);
+            y--;
+            z++;
+        }
+        //------------------------------------------------------------------
+        else if (map->returnValue(x, y, z + 1) == lengthTrace - 1) {
+            cellTrace = map->getCell(x, y, z + 1);
+            map->setTrace(x, y, z + 1);
+            trace.push_back(cellTrace);
+            z++;
+        }
+        else if (map->returnValue(x, y, z - 1) == lengthTrace - 1) {
+            cellTrace = map->getCell(x, y, z - 1);
+            map->setTrace(x, y, z - 1);
+            trace.push_back(cellTrace);
+            z--;
         }
 
         QString lengthTraceString;
