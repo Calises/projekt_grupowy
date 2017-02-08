@@ -366,6 +366,12 @@
            <string/>
           </property>
          </widget>
+         <zorder>groupBox_Metric</zorder>
+         <zorder>label_3</zorder>
+         <zorder>label_4</zorder>
+         <zorder>spinBox_przeszkoda</zorder>
+         <zorder>comboBox_algorithm</zorder>
+         <zorder>computingBox</zorder>
         </widget>
        </item>
        <item>
@@ -462,25 +468,12 @@
            <rect>
             <x>20</x>
             <y>20</y>
-            <width>81</width>
+            <width>211</width>
             <height>23</height>
            </rect>
           </property>
           <property name="text">
-           <string>START</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="radioButton_Wisualisation">
-          <property name="geometry">
-           <rect>
-            <x>110</x>
-            <y>20</y>
-            <width>81</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Wizualizacja</string>
+           <string>ALGORYTM START</string>
           </property>
          </widget>
         </widget>
@@ -496,7 +489,7 @@
      <x>0</x>
      <y>0</y>
      <width>935</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuPlik">
