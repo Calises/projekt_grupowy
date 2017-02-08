@@ -456,6 +456,13 @@ void Trajektorie3d::propagacjaFaliManhattan()
         }
         lengthTrace++;
 
+        if(listNext.size() == 0 && run)
+        {
+            QMessageBox::warning(this, "Uwaga", "Nie mozna znalezc sciezki!");
+            clearMap();
+            return;
+        }
+
         //przepisanie "czola fali" po zakoñczeniu iteracji
         while (!listNext.empty())
         {
@@ -1130,6 +1137,13 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
             currentCell.change_cell(lengthTrace, Wolna);
         }
         lengthTrace++;
+
+        if(listNext.size() == 0 && run)
+        {
+            QMessageBox::warning(this, "Uwaga", "Nie mozna znalezc sciezki!");
+            clearMap();
+            return;
+        }
 
         //przepisanie "czola fali" po zakoñczeniu iteracji
         while (!listNext.empty())
