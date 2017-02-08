@@ -43,7 +43,8 @@ private:
     void przekaz(Metric metric, Cell endCell, int lengthTrace);
     void searchTrace(Cell endCell, int lengthTrace);
     void searchTraceCzebyszew(Cell endCell, int lengthTrace);
-    list<Cell>* algorithmAddCell(list<Cell> *listNow, list<Cell> *listNext, Cell cell, int lengthTrace);
+    void algorithmAddCell(list<Cell> &listNext, Cell cell, int lengthTrace);
+    int algorithmFindEnd(list<Cell> &listNow, list<Cell> &listNext, Cell cell, int lengthTrace);
     void rysuj();
     AboutWindow* aboutWindow;
     DimensionsDialog* newDimensionsDialog;
