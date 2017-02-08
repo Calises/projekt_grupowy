@@ -524,30 +524,21 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 (map->returnValue(currentX - 1, currentY - 1, currentZ) == 101))
             {
                 potentialCell = map->getCell(currentX - 1, currentY - 1, currentZ);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //lewy gorny skos nad
             if ((map->returnValue(currentX - 1, currentY - 1, currentZ - 1) == 100) ||
                 (map->returnValue(currentX - 1, currentY - 1, currentZ - 1) == 101))
             {
                 potentialCell = map->getCell(currentX - 1, currentY - 1, currentZ - 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);               
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //lewy gorny skos pod
             if ((map->returnValue(currentX - 1, currentY - 1, currentZ + 1) == 100) ||
                 (map->returnValue(currentX - 1, currentY - 1, currentZ + 1) == 101))
             {
                 potentialCell = map->getCell(currentX - 1, currentY - 1, currentZ + 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //--------------------------------------------------------------------------------
             //prawy gorny skos
@@ -555,30 +546,21 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 (map->returnValue(currentX + 1, currentY - 1, currentZ) == 101))
             {
                 potentialCell = map->getCell(currentX + 1, currentY - 1, currentZ);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //prawy gorny skos nad
             if ((map->returnValue(currentX + 1, currentY - 1, currentZ - 1) == 100) ||
                 (map->returnValue(currentX + 1, currentY - 1, currentZ - 1) == 101))
             {
                 potentialCell = map->getCell(currentX + 1, currentY - 1, currentZ - 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //prawy gorny skos pod
             if ((map->returnValue(currentX + 1, currentY - 1, currentZ + 1) == 100) ||
                 (map->returnValue(currentX + 1, currentY - 1, currentZ + 1) == 101))
             {
                 potentialCell = map->getCell(currentX + 1, currentY - 1, currentZ + 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //-----------------------------------------------------------------------------------
             //prawy dolny skok 
@@ -586,30 +568,21 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 (map->returnValue(currentX - 1, currentY + 1, currentZ) == 101))
             {
                 potentialCell = map->getCell(currentX - 1, currentY + 1, currentZ);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //prawy dolny skok nad
             if ((map->returnValue(currentX - 1, currentY + 1, currentZ - 1) == 100) ||
                 (map->returnValue(currentX - 1, currentY + 1, currentZ - 1) == 101))
             {
                 potentialCell = map->getCell(currentX - 1, currentY + 1, currentZ - 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //prawy dolny skok pod
             if ((map->returnValue(currentX - 1, currentY + 1, currentZ + 1) == 100) ||
                 (map->returnValue(currentX - 1, currentY + 1, currentZ + 1) == 101))
             {
                 potentialCell = map->getCell(currentX - 1, currentY + 1, currentZ + 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //------------------------------------------------------------------------------
             //lewy dolny skok
@@ -617,30 +590,21 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 (map->returnValue(currentX + 1, currentY + 1, currentZ) == 101))
             {
                 potentialCell = map->getCell(currentX + 1, currentY + 1, currentZ);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //lewy dolny skok nad 
             if ((map->returnValue(currentX + 1, currentY + 1, currentZ - 1) == 100) ||
                 (map->returnValue(currentX + 1, currentY + 1, currentZ - 1) == 101))
             {
                 potentialCell = map->getCell(currentX + 1, currentY + 1, currentZ - 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //lewy dolny skok pod
             if ((map->returnValue(currentX + 1, currentY + 1, currentZ + 1) == 100) ||
                 (map->returnValue(currentX + 1, currentY + 1, currentZ + 1) == 101))
             {
                 potentialCell = map->getCell(currentX + 1, currentY + 1, currentZ + 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //---------------------------------------------------------------------------
             //Polnoc
@@ -648,30 +612,21 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 (map->returnValue(currentX, currentY - 1, currentZ) == 101))
             {
                 potentialCell = map->getCell(currentX, currentY - 1, currentZ);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //Polnoc nad
             if ((map->returnValue(currentX, currentY - 1, currentZ -1) == 100) ||
                 (map->returnValue(currentX, currentY - 1, currentZ -1) == 101))
             {
                 potentialCell  = map->getCell(currentX, currentY - 1, currentZ - 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //Polnoc pod
             if ((map->returnValue(currentX, currentY - 1, currentZ +1) == 100) ||
                 (map->returnValue(currentX, currentY - 1, currentZ +1) == 101))
             {
                 potentialCell = map->getCell(currentX, currentY - 1, currentZ + 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //---------------------------------------------------------------------------
             //Poludnie
@@ -679,30 +634,21 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 (map->returnValue(currentX, currentY + 1, currentZ) == 101))
             {
                 potentialCell = map->getCell(currentX, currentY + 1, currentZ);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //Poludnie nad
             if ((map->returnValue(currentX, currentY + 1, currentZ-1) == 100) ||
                 (map->returnValue(currentX, currentY + 1, currentZ-1) == 101))
             {
                 potentialCell = map->getCell(currentX, currentY + 1, currentZ - 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //Poludnie pod
             if ((map->returnValue(currentX, currentY + 1, currentZ +1) == 100) ||
                 (map->returnValue(currentX, currentY + 1, currentZ +1) == 101))
             {
                 potentialCell = map->getCell(currentX, currentY + 1, currentZ + 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //-----------------------------------------------------------------------
             //Wschod
@@ -710,30 +656,21 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 (map->returnValue(currentX + 1, currentY, currentZ) == 101))
             {
                 potentialCell = map->getCell(currentX + 1, currentY, currentZ);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //Wschod nad
             if ((map->returnValue(currentX + 1, currentY, currentZ -1) == 100) ||
                 (map->returnValue(currentX + 1, currentY, currentZ -1) == 101))
             {
                 potentialCell = map->getCell(currentX + 1, currentY, currentZ - 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //Wschod pod
             if ((map->returnValue(currentX + 1, currentY, currentZ +1) == 100) ||
                 (map->returnValue(currentX + 1, currentY, currentZ +1) == 101))
             {
                 potentialCell = map->getCell(currentX + 1, currentY, currentZ + 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //--------------------------------------------------------------------------
             //Zachod
@@ -741,30 +678,21 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 (map->returnValue(currentX - 1, currentY, currentZ) == 101))
             {
                 potentialCell = map->getCell(currentX - 1, currentY, currentZ);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //Zachod nad
             if ((map->returnValue(currentX - 1, currentY, currentZ-1) == 100) ||
                 (map->returnValue(currentX - 1, currentY, currentZ-1) == 101))
             {
                 potentialCell = map->getCell(currentX - 1, currentY, currentZ - 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //Zachod pod
             if ((map->returnValue(currentX - 1, currentY, currentZ+1) == 100) ||
                 (map->returnValue(currentX - 1, currentY, currentZ+1) == 101))
             {
                 potentialCell = map->getCell(currentX - 1, currentY, currentZ + 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //---------------------------------------------------------------------
             //dol
@@ -772,20 +700,14 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                 (map->returnValue(currentX, currentY, currentZ - 1) == 101))
             {
                 potentialCell = map->getCell(currentX, currentY, currentZ - 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             //gora
             if ((map->returnValue(currentX, currentY, currentZ + 1) == 100) ||
                 (map->returnValue(currentX, currentY, currentZ + 1) == 101))
             {
                 potentialCell = map->getCell(currentX, currentY, currentZ + 1);
-                if (potentialCell.cell_value() == 101)
-                    algorithmFindEnd(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
-                else
-                    algorithmAddCell(listNext, potentialCell, lengthTrace);
+                run = countAlgorithm(listNow, listNext, potentialCell, lengthTrace, Czebyszew);
             }
             currentCell.change_cell(lengthTrace, Wolna);
         }
