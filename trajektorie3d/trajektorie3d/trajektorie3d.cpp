@@ -63,11 +63,11 @@ Trajektorie3d::Trajektorie3d(QWidget *parent) :
 	connect(ui->removeObstacleButton, &QPushButton::clicked,
 		[=]() {removeObstacle();  });
 
-	//ogreWidget = new OgreWidget(this);
-	//ogreWidget->setFixedWidth(640);
-	//ogreWidget->setFixedHeight(480);
+	ogreWidget = new OgreWidget(this);
+	ogreWidget->setFixedWidth(640);
+	ogreWidget->setFixedHeight(480);
 
-	//ui->centralLayout->addWidget(ogreWidget, 0, 0, 1, 1);
+	ui->centralLayout->addWidget(ogreWidget, 0, 0, 1, 1);
 
     // tworzenie przykladowej mapy
     map = new Map(10, 10, 10);
@@ -240,7 +240,7 @@ void Trajektorie3d::clearMap()
 
 void Trajektorie3d::Start()
 {
-    //clearMap();
+    clearMap();
 
     Metric metric;
     if (ui->radioButton_Manhattan->isChecked())
@@ -463,7 +463,7 @@ void Trajektorie3d::propagacjaFaliManhattan()
     qDebug() << QString("koniec petli");
     //map->show();
 
-    //ogreWidget->redrawScene(map);
+    ogreWidget->redrawScene(map);
 }
 list<Cell>* Trajektorie3d::algorithmAddCell(list<Cell> *listNow, list<Cell> *listNext, Cell cell, int lengthTrace)
 {
@@ -594,6 +594,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX - 1, currentY - 1, currentZ);
                 map->setValue(currentX - 1, currentY - 1, currentZ, lengthTrace);
@@ -613,6 +614,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX - 1, currentY - 1, currentZ - 1);
                 map->setValue(currentX - 1, currentY - 1, currentZ - 1, lengthTrace);
@@ -632,6 +634,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX - 1, currentY - 1, currentZ + 1);
                 map->setValue(currentX - 1, currentY - 1, currentZ + 1, lengthTrace);
@@ -652,6 +655,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX + 1, currentY - 1, currentZ);
                 map->setValue(currentX + 1, currentY - 1, currentZ, lengthTrace);
@@ -671,6 +675,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX + 1, currentY - 1, currentZ - 1);
                 map->setValue(currentX + 1, currentY - 1, currentZ - 1, lengthTrace);
@@ -690,6 +695,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX + 1, currentY - 1, currentZ + 1);
                 map->setValue(currentX + 1, currentY - 1, currentZ + 1, lengthTrace);
@@ -710,6 +716,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX - 1, currentY + 1, currentZ);
                 map->setValue(currentX - 1, currentY + 1, currentZ, lengthTrace);
@@ -729,6 +736,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX - 1, currentY + 1, currentZ - 1);
                 map->setValue(currentX - 1, currentY + 1, currentZ - 1, lengthTrace);
@@ -748,6 +756,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX - 1, currentY + 1, currentZ + 1);
                 map->setValue(currentX - 1, currentY + 1, currentZ + 1, lengthTrace);
@@ -768,6 +777,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX + 1, currentY + 1, currentZ);
                 map->setValue(currentX + 1, currentY + 1, currentZ, lengthTrace);
@@ -787,6 +797,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX + 1, currentY + 1, currentZ - 1);
                 map->setValue(currentX + 1, currentY + 1, currentZ - 1, lengthTrace);
@@ -806,6 +817,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX + 1, currentY + 1, currentZ + 1);
                 map->setValue(currentX + 1, currentY + 1, currentZ + 1, lengthTrace);
@@ -826,6 +838,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX, currentY - 1, currentZ);
                 map->setValue(currentX, currentY - 1, currentZ, lengthTrace);
@@ -845,6 +858,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX, currentY - 1, currentZ -1);
                 map->setValue(currentX, currentY - 1, currentZ -1, lengthTrace);
@@ -864,6 +878,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec");
+                    break;
                 }
                 potentialCell = map->getCell(currentX, currentY - 1, currentZ +1);
                 map->setValue(currentX, currentY - 1, currentZ +1, lengthTrace);
@@ -884,6 +899,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNext.clear();
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
+                    break;
                 }
                 potentialCell = map->getCell(currentX, currentY + 1, currentZ);
                 map->setValue(currentX, currentY + 1, currentZ, lengthTrace);
@@ -903,6 +919,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNext.clear();
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
+                    break;
                 }
                 potentialCell = map->getCell(currentX, currentY + 1, currentZ-1);
                 map->setValue(currentX, currentY + 1, currentZ-1, lengthTrace);
@@ -922,6 +939,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNext.clear();
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
+                    break;
                 }
                 potentialCell = map->getCell(currentX, currentY + 1, currentZ+1);
                 map->setValue(currentX, currentY + 1, currentZ+1, lengthTrace);
@@ -942,6 +960,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec3");
+                    break;
                 }
                 potentialCell = map->getCell(currentX + 1, currentY, currentZ);
                 map->setValue(currentX + 1, currentY, currentZ, lengthTrace);
@@ -961,6 +980,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec3");
+                    break;
                 }
                 potentialCell = map->getCell(currentX + 1, currentY, currentZ -1);
                 map->setValue(currentX + 1, currentY, currentZ -1, lengthTrace);
@@ -980,6 +1000,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec3");
+                    break;
                 }
                 potentialCell = map->getCell(currentX + 1, currentY, currentZ+1);
                 map->setValue(currentX + 1, currentY, currentZ+1, lengthTrace);
@@ -1000,6 +1021,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec4");
+                    break;
                 }
                 potentialCell = map->getCell(currentX - 1, currentY, currentZ);
                 map->setValue(currentX - 1, currentY, currentZ, lengthTrace);
@@ -1019,6 +1041,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec4");
+                    break;
                 }
                 potentialCell = map->getCell(currentX - 1, currentY, currentZ-1);
                 map->setValue(currentX - 1, currentY, currentZ-1, lengthTrace);
@@ -1038,6 +1061,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
                     listNow.clear();
                     przekaz(Czebyszew, stopCell, lengthTrace);
                     //qDebug() << QString("koniec4");
+                    break;
                 }
                 potentialCell = map->getCell(currentX - 1, currentY, currentZ+1);
                 map->setValue(currentX - 1, currentY, currentZ+1, lengthTrace);
@@ -1107,7 +1131,7 @@ void Trajektorie3d::propagacjaFaliCzebyszew()
 
     //map->show();
 
-    //ogreWidget->redrawScene(map);
+    ogreWidget->redrawScene(map);
 }
 
 void Trajektorie3d::searchTraceCzebyszew(Cell endCell, int lengthTrace)
@@ -1118,7 +1142,7 @@ void Trajektorie3d::searchTraceCzebyszew(Cell endCell, int lengthTrace)
     int x = endCell.cell_x();
     int y = endCell.cell_y();
     int z = endCell.cell_z();
-
+    map->setStart(x, y, z);
 
     while (lengthTrace > 1)
     {
