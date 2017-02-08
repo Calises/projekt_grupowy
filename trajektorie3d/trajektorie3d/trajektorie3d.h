@@ -40,8 +40,11 @@ private:
 	void showEditMap(std::string, CellState);
 	void removeObstacle();
     void StartAlg_Propagacja(Metric metric);
-    void przekaz(Cell endCell, int lengthTrace);
+    void propagacjaFaliManhattan();
+    void propagacjaFaliCzebyszew();     
+    void przekaz(Metric metric, Cell endCell, int lengthTrace);
     void searchTrace(Cell endCell, int lengthTrace);
+    void searchTraceCzebyszew(Cell endCell, int lengthTrace);
     void rysuj();
     AboutWindow* aboutWindow;
 };
